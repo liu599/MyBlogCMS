@@ -1,0 +1,55 @@
+{
+  "entry": "src/index.js",
+  "env": {
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr",
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": "css" }]
+      ]
+    },
+    "production": {
+      "extraBabelPlugins": [
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": true }]
+      ]
+    }
+  },
+  "proxy": {
+    "/api/neko/v1/token.get": {
+      "target": "https://www.blog.nekohand.moe/api/neko/v1/",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/neko/v1/token.get" : "/token.get" }
+    },
+    "/api/neko/v1/users": {
+      "target": "https://www.blog.nekohand.moe/api/neko/v1/",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/neko/v1/users" : "/auth/users" }
+    },
+    "/api/neko/v1/auth/users": {
+      "target": "https://www.blog.nekohand.moe/api/neko/v1/",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/neko/v1/auth/users" : "/auth/users" }
+    },
+    "/api/neko/v1/categories": {
+      "target": "https://www.blog.nekohand.moe/api/neko/v1/",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/neko/v1/categories" : "/categories" }
+    },
+    "/api/neko/v1/auth/category": {
+      "target": "https://www.blog.nekohand.moe/api/neko/v1/",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/neko/v1/auth/category" : "/auth/category" }
+    },
+    "/api/neko/v1/posts": {
+      "target": "https://www.blog.nekohand.moe/api/neko/v1/",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/neko/v1/posts" : "/posts" }
+    },
+    "/api/neko/v1/auth/post": {
+     "target": "https://www.blog.nekohand.moe/api/neko/v1/",
+     "changeOrigin": true,
+     "pathRewrite": { "^/api/neko/v1/auth/post" : "/auth/post" }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "roadhog server",
+    "build": "roadhog build",
+    "lint": "eslint --ext .js src test",
+    "precommit": "npm run lint"
+  },
+  "engines": {
+    "install-node": "6.11.1"
+  },
+  "dependencies": {
+    "antd": "^2.13.11",
+    "axios": "^0.17.1",
+    "babel-runtime": "^6.9.2",
+    "draft-js": "^0.10.4",
+    "dva": "^2.1.0",
+    "dva-loading": "^1.0.4",
+    "express": "^4.16.2",
+    "good-storage": "^1.0.1",
+    "jsonp": "^0.2.1",
+    "less-vars-to-js": "^1.2.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.19.3",
+    "path-to-regexp": "^2.1.0",
+    "prop-types": "^15.6.0",
+    "qs": "^6.5.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-lz-editor": "^0.11.8",
+    "react-router-redux": "^4.0.8"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "babel-plugin-dva-hmr": "^0.4.0",
+    "babel-plugin-import": "^1.6.2",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
+    "expect": "^21.0.0",
+    "husky": "^0.12.0",
+    "redbox-react": "^1.4.3",
+    "redux-logger": "^3.0.6",
+    "roadhog": "^1.2.1"
+  }
+}
