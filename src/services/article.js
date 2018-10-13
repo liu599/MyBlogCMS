@@ -31,3 +31,10 @@ export async function postFetch(id) {
   })
 }
 
+export async function postCreation(data) {
+  return request({
+    url: `https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/post.create`,
+    method: 'post',
+    data,
+  })
+}

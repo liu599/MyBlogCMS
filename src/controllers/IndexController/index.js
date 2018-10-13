@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import {routerRedux} from '@symph/joy/router';
 import DataModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
-import { Form, Icon, Input, Row, Button, notification } from 'antd';
+import { Form, Icon, Input, Row, Button, notification, message } from 'antd';
 
 const FormItem = Form.Item;
 @requireModel(DataModel)
@@ -14,27 +14,43 @@ class IndexController extends PureComponent {
     const {form: {validateFields}, dispatch} = this.props;
     e.preventDefault();
     validateFields(async (err, data) => {
-      if (err) {
-        notification.error({
-          duration: 2,
-          message: '登陆失败',
-          description: '缺少必填的信息'
-        });
+      if(/^[0-9]+$/.test(data.username)) {
+        message.error('用户名不能是纯数字');
         return;
       }
-      await dispatch({
+      if(/^[a-z0-9A-Z]+$/.test(data.password)) {
+        message.error('密码必须包含特殊字符');
+        return;
+      }
+      const hide = message.loading('正在登陆中...');
+      let isSuccess = await dispatch({
         type: 'model/login',
         payload: data,
       });
-      notification.success({
-        duration: 2,
-        message: '登陆成功',
-        description: '欢迎登陆管理系统'
-      });
-      // 延迟2S跳转至列表页面
-      // setTimeout(() => {
-      //   dispatch(routerRedux.push('/dashboard'));
-      // }, 2000);
+      hide();
+      if (isSuccess !== null) {
+        notification.success({
+          duration: 1,
+          message: '登陆成功',
+          description: '欢迎登陆管理系统'
+        });
+        await dispatch({
+          type: 'model/fetchPostsList',
+          payload: {
+            pageNumber: 1,
+            pageSize: 20,
+          }
+        });
+        setTimeout(() => {
+          dispatch(routerRedux.push('/dashboard/article-list'));
+        }, 1000);
+      } else {
+        notification.error({
+          duration: 2,
+          message: '登陆错误',
+          description: '请输入正确的用户名和密码'
+        });
+      }
     });
   };
   render() {
@@ -52,7 +68,7 @@ class IndexController extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: 'Please input the username',
+                    message: '用户名不能为空',
                   },
                 ],
               })(<Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} onPressEnter={() => this.onSubmit} size="large" placeholder="Username" />)}
@@ -62,7 +78,7 @@ class IndexController extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: 'Please input the password',
+                    message: '密码不能为空',
                   },
                 ],
               })(<Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} onPressEnter={() => this.onSubmit} size="large" placeholder="Password" type="password" />)}

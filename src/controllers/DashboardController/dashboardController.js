@@ -1,10 +1,10 @@
-import React, {PureComponent} from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Button } from 'antd';
+import React, {Component} from 'react';
+import { Layout, Menu, Breadcrumb, Icon, Button, Modal } from 'antd';
 import Head from '@symph/joy/head';
 import WebsiteInfo from '../../components/Layout';
 import { arrayToTree } from '../../utils';
 import { menu } from '../../config/constant';
-import {Switch, Route, Link} from '@symph/joy/router'
+import {Switch, Route, Link, routerRedux} from '@symph/joy/router'
 import DashboardModel from '../../models/model'
 import controller, {requireModel} from '@symph/joy/controller'
 
@@ -15,11 +15,12 @@ const MenuItem = Menu.Item;
 
 const keyGenerator = k => (`nh-${k}`);
 
-const onSelectModule = (e) => {
-  console.log(e);
+const onSelectModule = (e, dispatch) => {
+  // console.log(e);
+  return null;
 };
 
-const generateMenu = (menuTree) => {
+const generateMenu = (menuTree, dispatch) => {
   const mode = 'inline';
   const defaultOpenKeys = [String(menuTree[0].children[0].id)];
   const defaultSelectedKeys = menuTree.map((menuItem) => {
@@ -31,7 +32,7 @@ const generateMenu = (menuTree) => {
       // defaultSelectedKeys={defaultOpenKeys}
       defaultOpenKeys={defaultSelectedKeys}
       style={{ height: '100%', borderRight: 0 }}
-      onSelect={onSelectModule}
+      onSelect={() => onSelectModule(event, dispatch)}
     >
       {generateSubMenu(menuTree)}
     </Menu>
@@ -69,7 +70,50 @@ const generateSubMenu = (menuTree) => {
     model: state.model // bind model's state to props
   }
 })
-export default class DashboardController extends PureComponent {
+export default class DashboardController extends Component {
+  
+  state = {
+    ModalText: '确认退出管理系统?',
+    visible: false,
+    confirmLoading: false,
+  };
+  
+  
+  showModal = () => {
+    console.log(this.props);
+    this.setState({
+      visible: true,
+    });
+  };
+  
+  handleOk = () => {
+    this.setState({
+      ModalText: '正在退出管理系统.....',
+      confirmLoading: true,
+    });
+    setTimeout(() => {
+      if (window) {
+        window.localStorage.removeItem("nekohand_token");
+        window.localStorage.removeItem("nekohand_administrator");
+      }
+      this.setState({
+        visible: false,
+        confirmLoading: false,
+      });
+      this.props.dispatch(routerRedux.push('/'));
+    }, 1000);
+  };
+  
+  handleCancel = () => {
+    console.log('Clicked cancel button');
+    this.setState({
+      visible: false,
+    });
+  };
+  
+  async logout() {
+  
+  }
   
   async fetchServerInfo() {
     let {dispatch} = this.props;
@@ -93,11 +137,11 @@ export default class DashboardController extends PureComponent {
           <title>Dashboard</title>
         </Head>
         <Header style={{ background: '#666', marginBottom: '36px', textAlign: 'right' }} >
-          <Button onClick={() => { this.fetchServerInfo(); }}> Log out</Button>
+          <Button onClick={() => { this.showModal(); }}> Log out</Button>
         </Header>
         <Layout>
           <Sider width={200} style={{ background: '#fff', minHeight: '100vh', padding: '10px 0' }}>
-            {generateMenu(arrayToTree(menu))}
+            {generateMenu(arrayToTree(menu), this.props.dispatch)}
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
             <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
@@ -108,6 +152,14 @@ export default class DashboardController extends PureComponent {
         <Footer style={{ background: 'transparent', width: '100%', padding: '20px 0' }}>
           <FooterContent />
         </Footer>
+        <Modal title="确认页面"
+               visible={this.state.visible}
+               onOk={this.handleOk}
+               confirmLoading={this.state.confirmLoading}
+               onCancel={this.handleCancel}
+        >
+          <p>{this.state.ModalText}</p>
+        </Modal>
       </Layout>
     );
   }

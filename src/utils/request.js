@@ -18,15 +18,18 @@ const fetch = (options = {
   } = options;
   
   const cloneData = lodash.cloneDeep(data);
-  // const token = cache.default.getToken();
-  const httpInstance = axios.create();
+  cloneData && delete cloneData.headers;
+  if (!options.data) {
+    options.data = {
+      headers: {}
+    }
+  }
+  // options.data && console.log(options.data.headers);
+  const httpInstance = axios.create({headers: options.data.headers});
   url = pathToRegexp.compile(url)(data);
-  
   switch (method.toLowerCase()) {
     case 'get':
-      return httpInstance.get(url, {
-        params: cloneData,
-      });
+      return httpInstance.get(url);
     case 'delete':
       return httpInstance.delete(url, {
         data: cloneData,
@@ -34,7 +37,7 @@ const fetch = (options = {
     case 'post-without-token':
       return axios.post(url, cloneData);
     case 'post-form-without-token':
-      return axios.create(options.data.header).post(url, require('qs').stringify(cloneData));
+      return axios.post(url, require('qs').stringify(cloneData));
     case 'post':
       return httpInstance.post(url, cloneData);
     case 'put':
@@ -51,7 +54,7 @@ export default function request(options) {
     options.fetchType = 'CORS';
   }
   if (options.fetchType === 'CORS') {
-    console.log('跨域请求开始');
+    // console.log('跨域请求开始');
     return fetch(options).then((response) => {
       console.log('response is', response);
       const { statusText, status } = response;
@@ -80,7 +83,7 @@ export default function request(options) {
         msg = error.message || 'Network Error';
       }
       return Promise.reject(new Error(JSON.stringify({ success: false, statusCode, message: msg }))).then(() => {}, (error) => {
-        console.error(error);
+        return error;
       });
     });
   }

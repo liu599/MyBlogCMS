@@ -26,8 +26,12 @@ export default class Main extends Component {
             <Switch>
               <DashboardController path="/dashboard">
                 <Switch>
-                  <Route path="/dashboard/article-list" component={ArticleComponents.ArticleList} />
-                  <Route path="/dashboard/article-category" component={ArticleComponents.ArticleCategory} />
+                  <Route exact path="/dashboard/article-list" component={ArticleComponents.ArticleList} />
+                  <Route exact path="/dashboard/article-list/create" component={ArticleComponents.ArticleEdit} />
+                  <Route exact path="/dashboard/article-list/edit/:pid" component={ArticleComponents.ArticleEdit} />
+                  <Route exact path="/dashboard/article-category" component={ArticleComponents.ArticleCategory} />
+                  <Route exact path="/dashboard/article-category/create" component={ArticleComponents.ArticleCategoryEdit} />
+                  <Route path="/dashboard/article-category/edit/:cid" component={ArticleComponents.ArticleCategoryEdit} />
                   <Route component={() => (<div>Waiting for the development..</div>)}/>
                 </Switch>
               </DashboardController>
