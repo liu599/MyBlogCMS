@@ -39,3 +39,4 @@ test/**/*.js
 
 # other
 package-lock.json
+yarn.lock
