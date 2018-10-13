@@ -1,34 +1,42 @@
-import 'babel-polyfill';
-import dva from 'dva';
-import { message } from 'antd';
-import createLoading from 'dva-loading';
-import createLogger from 'redux-logger';
-import createHistory from 'history/createBrowserHistory';
-import './index.css';
+import React, { Component } from 'react'
+import 'antd/dist/antd.css'
+import Head from '@symph/joy/head'
+import { LocaleProvider } from 'antd'
+import dynamic from '@symph/joy/dynamic'
+import { Switch, Route, Redirect } from '@symph/joy/router'
+import zhCN from 'antd/lib/locale-provider/zh_CN'
+import AppController from './controllers/AppController'
+import ArticleComponents from './components/Article'
 
+// 加载业务组件 
+import loading from './components/Loading'
 
-// 1. Initialize
-const app = dva({
-  ...createLoading({
-    effects: true,
-  }),
-  history: createHistory(),
-  onError(error) {
-    message.error(error.message);
-  },
-  onAction: createLogger,
-});
-app.model(require('./models/login'));
-app.model(require('./models/article'));
-app.model(require('./models/users'));
-// 2. Plugins
-// app.use({});
+const DashboardController = dynamic({loader: () => import('./controllers/DashboardController/dashboardController'), loading});
+const IndexController = dynamic({loader: () => import('./controllers/IndexController'), loading});
 
-// 3. Model
-// app.model(require('./models/example'));
+export default class Main extends Component {
+  render () {
+    return (
+      <div>
+        <Head>
+          <title>Nekohand Blog Content Management Service</title>
+        </Head>
+        <LocaleProvider locale={zhCN}>
+          <AppController>
+            <Switch>
+              <DashboardController path="/dashboard">
+                <Switch>
+                  <Route path="/dashboard/article-list" component={ArticleComponents.ArticleList} />
+                  <Route path="/dashboard/article-category" component={ArticleComponents.ArticleCategory} />
+                  <Route component={() => (<div>Waiting for the development..</div>)}/>
+                </Switch>
+              </DashboardController>
+              <Route path="/" component={IndexController}/>
+            </Switch>
+          </AppController>
+        </LocaleProvider>
+      </div>
+    )
+  }
+};
 
-// 4. Router
-app.router(require('./router'));
-
-// 5. Start
-app.start('#root');

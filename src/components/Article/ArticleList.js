@@ -1,47 +1,24 @@
 import React from 'react';
-import { connect } from 'dva';
-import lodash from 'lodash';
-import { routerRedux } from 'dva/router';
+import Head from '@symph/joy/head';
+import request from '../../utils/request';
 import { Table, Button, Pagination } from 'antd';
-import PropTypes from 'prop-types';
 
-const ArticleList = ({
-  loading,
-  dispatch,
-  articleList,
-  articlePager,
-}) => {
-  const articleEditHandler = (text, record, index, deleteFlag) => {
-    if (!deleteFlag) {
-      dispatch(routerRedux.push({
-        pathname: '/dashboard/article-edit',
-        query: {
-          index,
-        },
-      }));
-    } else {
-      dispatch({ type: 'article/articleDelete', payload: { pid: record.pid } });
+
+export default () => {
+  
+  
+  const data = [
+    {
+      id: 1,
+      key: 'afsf',
+      title: 'page',
+      slug: 'slg'
     }
-  };
-  const onPageChange = (page, pageSize) => {
-    console.log(page, pageSize);
-    dispatch({
-      type: 'article/fetchArticles',
-      payload: {
-        start: (page - 1) * pageSize,
-        count: pageSize,
-      },
-    });
-  };
-  const showTotalFunc = (total, range) => `${range[0]}-${range[1]} of ${total} items`;
-  const data = lodash.cloneDeep(articleList);
-  const pager = lodash.cloneDeep(articlePager);
-  data.forEach((item) => {
-    item.key = item.pid;
-  });
+  ];
+  
   const columns = [{
     title: 'id',
-    dataIndex: 'pid',
+    dataIndex: 'id',
     width: '10%',
   }, {
     title: 'title',
@@ -57,57 +34,34 @@ const ArticleList = ({
     width: '30%',
     render: (text, record, index) => (
       <span>
-        <Button type="primary" style={{ marginRight: 10 }} onClick={() => { return articleEditHandler(text, record, index); }}>Edit</Button>
-        <Button type="danger" onClick={() => { return articleEditHandler(text, record, index, true); }}>Delete</Button>
+        <Button type="primary" style={{ marginRight: 10 }} onClick={() => { console.log('edit') }}>Edit</Button>
+        <Button type="danger" onClick={() => { console.log('delete')}}>Delete</Button>
       </span>
     ),
   }];
-
+  
+  const onc = () => {
+    request({
+      url: 'https://www.blog.nekohand.moe/api/nekohand/v2/backend/status',
+      method: 'get',
+    });
+  };
+  
   return (
     <div>
-      <h2 style={{ marginBottom: 20 }}>Article</h2>
+      <Head>
+        <title>Dashboard / Article</title>
+      </Head>
+      <h2 style={{ marginBottom: 20 }}>文章列表</h2>
       <div style={{ marginBottom: 20 }}>
-        <Button type="primary" style={{ marginRight: 10 }} onClick={() => { return articleEditHandler(); }}>Create</Button>
-      </div>
-      <div style={{ marginBottom: 20, textAlign: 'right' }}>
-        <Pagination
-          onChange={onPageChange}
-          total={pager.total}
-          showTotal={showTotalFunc}
-          pageSize={pager.count}
-          current={pager.page}
-          defaultCurrent={1}
-        />
+        <Button type="primary" style={{ marginRight: 10 }} onClick={() => {
+          onc();
+        }}>Create</Button>
       </div>
       <Table
-        loading={loading.effects.login}
         dataSource={data}
         columns={columns}
-        pagination={{
-          defaultCurrent: 1,
-          pageSize: pager.count,
-          total: pager.total,
-          current: pager.page,
-          showTotal: showTotalFunc,
-          onChange: onPageChange,
-        }}
       />
     </div>
-  );
-};
-
-
-ArticleList.propTypes = {
-  dispatch: PropTypes.func,
-  loading: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
-  return {
-    loading: state.loading,
-    articleList: state.article.articleList,
-    articlePager: state.article.articlePager,
-  };
-};
-
-export default connect(mapStateToProps, null)(ArticleList);
+  )
+}

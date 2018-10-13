@@ -1,8 +1,6 @@
 /* global window */
 /* eslint no-unused-expressions: 0 */
 import lodash from 'lodash';
-import cache from './cache';
-import request from './request';
 
 // 连字符转驼峰
 // String.prototype.hyphenToHump = function () {
@@ -17,7 +15,7 @@ import request from './request';
 // };
 
 // 日期格式化
-window.timeFormat = (timestamp) => {
+const timeFormat = (timestamp) => {
   // return new Date(timestamp * 1000).toISOString().replace(/[a-zA-Z]/g, ' ').slice(0, -5);
   return new Date(timestamp * 1000).toLocaleString('chinese', { hour12: false }).replace(/[a-zA-Z]/g, ' ').slice(0, -3);
 };
@@ -85,8 +83,7 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
   return result;
 };
 
-export default {
-  cache,
-  request,
+export {
   arrayToTree,
+  timeFormat,
 };
