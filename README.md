@@ -1,23 +1,4 @@
 # Nekohand Blog Content Management System
 
-## Modules
-
-- Users
-  - Token
-  - User Authorization
-  - CURD
-- Post
-
-
-## Technical Stack
-
-- dva.js (library, 2.1.0)
-  - React
-  - Redux
-  - Redux-saga
-  - elem.js
-- antd
-
-## Timeline
-
-no-hup
+- Upgrade for blog server 2.0, blog version 7.0.0.
+- Use [Symph-joy](https://github.com/lnlfps/symph-joy) framework(nextjs + dva + React)
