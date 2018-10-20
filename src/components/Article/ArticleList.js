@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Head from '@symph/joy/head';
 import DashboardModel from '../../models/model'
-import { Table, Button, Pagination, message } from 'antd';
+import { Table, Button, Pagination, Popconfirm, message } from 'antd';
 import controller, {requireModel} from '@symph/joy/controller'
 import {routerRedux} from '@symph/joy/router';
 
@@ -35,6 +35,24 @@ export default class ArticleList extends Component {
     });
   }
   
+  deletePost = (id) => {
+    this.props.dispatch(
+      {
+        type: 'model/deletePost',
+        payload: id,
+      }
+    ).then(res => {
+      console.log('call back here');
+      this.props.dispatch({
+        type: 'model/fetchPostsList',
+        payload: {
+          pageNumber: 1,
+          pageSize: 20,
+        }
+      })
+    });
+  };
+  
   columns = [{
     title: '序号',
     dataIndex: 'pid',
@@ -56,7 +74,16 @@ export default class ArticleList extends Component {
         <Button type="primary" style={{ marginRight: 10 }} onClick={(e) => {
           console.log('ee', record);
           this.props.dispatch(routerRedux.push(`/dashboard/article-list/edit/${record.id}`)) }}>Edit</Button>
-        <Button type="danger" onClick={() => { console.log('delete')}}>Delete</Button>
+        <Popconfirm title="Are you sure delete this post?" onConfirm={() => {this.deletePost({
+          pid: record.id,
+          headers: {
+            Authorization: this.props.model.token || window.localStorage.getItem("nekohand_token"),
+            User: this.props.model.user || window.localStorage.getItem("nekohand_administrator"),
+          }
+        });}} okText="Yes" cancelText="No">
+          <Button type="danger">Delete</Button>
+        </Popconfirm>
+        
       </span>
     ),
   }];
@@ -74,6 +101,7 @@ export default class ArticleList extends Component {
           }}>Create</Button>
         </div>
         <Table
+          scroll={{ y: 1200 }}
           dataSource={this.props.model.posts}
           columns={this.columns}
         />

@@ -1,17 +1,16 @@
 import request from '../utils/request';
-
-import request from '../utils/request';
+import {default as configs} from './config';
 
 export async function commentsFetch(coid) {
   return  request({
-    url: `https://www.blog.nekohand.moe/api/nekohand/v2/backend/comments/${coid}`,
+    url: `${configs.genUrl(configs.frontend, configs.modules.frontend.comments)}/${coid}`,
     method: 'post',
   })
 }
 
 export async function commentSubmit(data) {
   return  request({
-    url: `https://www.blog.nekohand.moe/api/nekohand/v2/backend/c2a5cc3b070`,
+    url: `${configs.genUrl(configs.frontend, configs.modules.frontend.commentCreation)}`,
     method: 'post',
     data
   })

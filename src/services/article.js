@@ -1,15 +1,16 @@
 import request from '../utils/request';
+import {default as configs} from './config';
 
 export async function getServerInfo() {
   return request({
-    url: 'https://www.blog.nekohand.moe/api/nekohand/v2/backend/status',
+    url: 'https://www.blog.nekohand.moe/api/nekohand/v2/frontend/status',
     method: 'get',
   });
 }
 
 export async function postsFetch(data) {
   return  request({
-    url: 'https://www.blog.nekohand.moe/api/nekohand/v2/backend/posts',
+    url: `${configs.genUrl(configs.frontend, configs.modules.frontend.posts)}`,
     method: 'post-form-without-token',
     data,
   })
@@ -18,7 +19,7 @@ export async function postsFetch(data) {
 export async function postsFetchByCategory({cid, ...data}) {
   
   return  request({
-    url: `https://www.blog.nekohand.moe/api/nekohand/v2/backend/posts/${cid}`,
+    url: `${configs.genUrl(configs.frontend, configs.modules.frontend.posts)}/${cid}`,
     method: 'post-form-without-token',
     data
   })
@@ -26,15 +27,24 @@ export async function postsFetchByCategory({cid, ...data}) {
 
 export async function postFetch(id) {
   return  request({
-    url: `https://www.blog.nekohand.moe/api/nekohand/v2/backend/post/${id}`,
+    url: `${configs.genUrl(configs.frontend, configs.modules.frontend.post)}/${id}`,
     method: 'post-form-without-token',
   })
 }
 
 export async function postCreation(data) {
   return request({
-    url: `https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/post.create`,
+    url: `${configs.genUrl(configs.backend, configs.modules.backend.postEdit)}`,
     method: 'post',
+    data,
+  })
+}
+
+export async function postDelete(data) {
+  
+  return request({
+    url: `${configs.genUrl(configs.backend, configs.modules.backend.postDelete)}`,
+    method: 'post-form',
     data,
   })
 }

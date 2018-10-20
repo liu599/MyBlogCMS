@@ -111,7 +111,7 @@ class ArticleEdit extends Component {
     const {form: {validateFields}, dispatch} = this.props;
     e.preventDefault();
     validateFields(async (err, data) => {
-      console.log('data', data, this.props);
+      // console.log('data', data, this.props);
       let pdata = lodash.cloneDeep(data);
       if (err) {
         return;
@@ -129,7 +129,7 @@ class ArticleEdit extends Component {
       };
       pdata.author = this.props.model.user || window.localStorage.getItem("nekohand_administrator");
       this.props.model.categories.forEach(category => {
-        if (category.cname === pdata.category) {
+        if (category.cname === data.category) {
           pdata.category = category.id;
         }
       });
@@ -139,7 +139,7 @@ class ArticleEdit extends Component {
       if (this.dataIndex !== 'undefined') {
         pdata.id = this.props.model.post.id;
       }
-      console.log(pdata);
+      console.log('pdata', pdata);
       this.props.dispatch({
         type: 'model/createPost',
         payload: pdata,
@@ -148,7 +148,7 @@ class ArticleEdit extends Component {
           message.info('succesfully created');
           setTimeout(() => {
             this.props.dispatch(routerRedux.push('/dashboard/article-list'));
-          }, 3000);
+          }, 1200);
         }
       }, () => {});
     });
@@ -194,7 +194,7 @@ class ArticleEdit extends Component {
                 {
                   this.props.model.categories.map((category) => {
                     return (
-                      <Option value={String(category.cid)} key={category.cid} >{category.cname}</Option>
+                      <Option value={String(category.id)} key={category.id} >{category.cname}</Option>
                     );
                   })
                 }

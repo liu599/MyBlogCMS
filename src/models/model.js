@@ -1,5 +1,5 @@
 import model from '@symph/joy/model';
-import { getServerInfo, postsFetch, postFetch, postCreation } from '../services/article';
+import {getServerInfo, postsFetch, postFetch, postCreation, postDelete} from '../services/article';
 import * as categoryServices from '../services/categories';
 import { login } from '../services/login';
 import lodash from 'lodash';
@@ -108,6 +108,16 @@ export default class AppModel {
       return true;
     }
     return null;
+  }
+  
+  async deletePost({payload}) {
+    let res = await postDelete(payload);
+    console.log(res.success, 'adfasf');
+    return true;
+  }
+  
+  async setAsyncState({payload}) {
+    this.setState(payload);
   }
   
 }

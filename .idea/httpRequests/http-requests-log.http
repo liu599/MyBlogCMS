@@ -1,3 +1,75 @@
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/post.delete?cid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+User: asjdfkladjsflaksdf
+
+<> 2018-10-19T010713.400.json
+
+###
+
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/category.delete?cid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+User: asjdfkladjsflaksdf
+
+<> 2018-10-19T010555.400.json
+
+###
+
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/category.delete?cid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+<> 2018-10-19T125542.502.html
+
+###
+
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/category.delete?cid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+<> 2018-10-18T113549.502.html
+
+###
+
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/category.delete?cid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/category.delete?pid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+<> 2018-10-18T113430.502.html
+
+###
+
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/category.delete?pid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/post.delete?pid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST https://www.blog.nekohand.moe/api/nekohand/v2/backend/auth/post.delete?pid=5bc4d4f1421aa91189ae75ea
+Accept: */*
+Cache-Control: no-cache
+
+###
+
 POST https://www.blog.nekohand.moe/api/neko/v1/auth/users
 Accept:*/*
 Cache-Control:no-cache

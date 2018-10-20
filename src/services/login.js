@@ -1,8 +1,9 @@
 import request from '../utils/request';
+import {default as configs} from './config';
 
 export async function login(data) {
   return request({
-    url: 'https://www.blog.nekohand.moe/api/nekohand/v2/backend/token.get',
+    url: `${configs.genUrl(configs.backend, configs.modules.backend.token)}`,
     method: 'post-form-without-token',
     data,
   });

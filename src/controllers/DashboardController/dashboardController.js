@@ -136,11 +136,11 @@ export default class DashboardController extends Component {
         <Head>
           <title>Dashboard</title>
         </Head>
-        <Header style={{ background: '#666', marginBottom: '36px', textAlign: 'right' }} >
+        <Header style={{ background: '#666', marginBottom: '20px', textAlign: 'right' }} >
           <Button onClick={() => { this.showModal(); }}> Log out</Button>
         </Header>
         <Layout>
-          <Sider width={200} style={{ background: '#fff', minHeight: '100vh', padding: '10px 0' }}>
+          <Sider width={160} style={{ background: '#fff', minHeight: '100vh', padding: '10px 0' }}>
             {generateMenu(arrayToTree(menu), this.props.dispatch)}
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>

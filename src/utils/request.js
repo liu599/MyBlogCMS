@@ -38,6 +38,9 @@ const fetch = (options = {
       return axios.post(url, cloneData);
     case 'post-form-without-token':
       return axios.post(url, require('qs').stringify(cloneData));
+    case 'post-form':
+      delete cloneData.headers;
+      return httpInstance.post(url, require('qs').stringify(cloneData));
     case 'post':
       return httpInstance.post(url, cloneData);
     case 'put':
@@ -57,6 +60,7 @@ export default function request(options) {
     // console.log('跨域请求开始');
     return fetch(options).then((response) => {
       console.log('response is', response);
+      
       const { statusText, status } = response;
       let { data } = response;
       if (data instanceof Array) {
@@ -64,6 +68,7 @@ export default function request(options) {
           list: data,
         };
       }
+      
       return Promise.resolve({
         success: true,
         message: statusText,
