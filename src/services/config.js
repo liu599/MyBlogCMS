@@ -1,5 +1,10 @@
 export default {
   rootUrl: 'https://www.blog.nekohand.moe',
+  fileUrl: 'http://bandori.nekohand.moe',
+  filemodules: {
+    upload: 'upload',
+    nekofile: 'nekofile'
+  },
   relativePath: '/api/nekohand/v2/',
   frontend: 'frontend',
   backend: 'backend',
@@ -13,6 +18,7 @@ export default {
       postChronology: 'posts-chronology',
       comments: 'comments',
       commentCreation: 'c2a5cc3b070',
+      filelist: 'filelist',
     },
     backend: {
       token: 'token.get',
@@ -24,5 +30,8 @@ export default {
   },
   genUrl: function (module, name) {
     return `${this.rootUrl}${this.relativePath}${module}/${name}`
+  },
+  genFileUrl: function(module, name) {
+    return `${this.fileUrl}/${module}/${name}`
   }
 }

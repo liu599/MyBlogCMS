@@ -172,7 +172,7 @@ class ArticleEdit extends Component {
               rules: [
                 {
                   required: true,
-                  max: 30,
+                  max: 120,
                   message: 'title format (max: 30)',
                 },
               ],
@@ -215,7 +215,7 @@ class ArticleEdit extends Component {
               ],
               initialValue: typeof this.dataIndex !== 'undefined' ? moment(String(this.props.model.post.createdAt * 1000), 'x') : moment(String(new Date().getTime()), 'x'),
             })(
-              <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+              <DatePicker showTime format="YYYY-MM-DD" />
             )}
           </FormItem>
           <FormItem

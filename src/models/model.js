@@ -2,6 +2,7 @@ import model from '@symph/joy/model';
 import {getServerInfo, postsFetch, postFetch, postCreation, postDelete} from '../services/article';
 import * as categoryServices from '../services/categories';
 import { login } from '../services/login';
+import { getFileList } from '../services/file'
 import lodash from 'lodash';
 import {message} from 'antd';
 
@@ -15,6 +16,7 @@ export default class AppModel {
     token: '',
     user: '',
     categories: [],
+    files: [],
     post: {
       id: '-1',
       title: '',
@@ -34,6 +36,21 @@ export default class AppModel {
     this.setState({
       list,
     });
+    return null;
+  }
+  
+  async filelist({ payload }) {
+    let response = await getFileList();
+    console.log(response);
+    if (response && response.data) {
+      let responseData = response.data;
+      responseData.forEach(item => {
+        item.key = item.filehash;
+      });
+      this.setState({
+        files: responseData,
+      })
+    }
     return null;
   }
   
