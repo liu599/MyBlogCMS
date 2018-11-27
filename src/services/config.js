@@ -21,7 +21,7 @@ export default {
       filelist: 'filelist',
     },
     backend: {
-      token: 'token.get',
+      token: 'token.v2.get',
       postEdit: 'auth/post.edit',
       postDelete: 'auth/post.delete',
       categoryEdit: 'auth/category.edit',

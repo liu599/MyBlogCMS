@@ -11,16 +11,24 @@ module.exports = {
     withLess({
       cssModules: true
     }),
-    // 处理antd中的样式
+    withCss({
+      cssModules: true,
+      ruleOptions: {
+        exclude: [
+          path.resolve(__dirname, './node_modules/'),
+          path.resolve(__dirname, './src/editor.css')
+        ]
+      }
+    }),
     withCss({
       cssModules: false,
       ruleOptions: {
         include: [
-          path.resolve(__dirname, './node_modules/antd/')
+          path.resolve(__dirname, './node_modules/'),
+          path.resolve(__dirname, './src/editor.css')
         ]
       }
-    }),
-
+    })
   ]
 };
 

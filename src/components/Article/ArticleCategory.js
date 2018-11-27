@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import Head from '@symph/joy/head';
 import DashboardModel from '../../models/model'
-import { Input, Table, Button, Pagination, Popconfirm, message } from 'antd';
+import { Form, Input, InputNumber, Table, Button, Pagination, Popconfirm, message } from 'antd';
 import controller, {requireModel} from '@symph/joy/controller'
 import {routerRedux} from '@symph/joy/router';
 import lodash from 'lodash';
-
-
+const FormItem = Form.Item;
 const EditableCell = ({ editable, value, onChange }) => (
   <div>
     {editable
@@ -22,7 +21,6 @@ const EditableCell = ({ editable, value, onChange }) => (
     model: state.model // bind model's state to props
   }
 })
-
 export default class ArticleCategory extends Component {
   
   state = {
@@ -40,49 +38,15 @@ export default class ArticleCategory extends Component {
     );
   }
   
-  handleChange(value, key, column) {
-    const newData = [...this.state.data];
-    console.log(value);
-    const target = newData.filter(item => key === item.key)[0];
-    if (target) {
-      target[column] = value;
-      this.setState({ data: newData });
-    }
-  }
-  edit(key) {
-    const newData = [...this.state.data];
-    const target = newData.filter(item => key === item.key)[0];
-    if (target) {
-      target.editable = true;
-      this.setState({ data: newData });
-    }
-  }
-  save(key) {
-    const newData = this.props.model.categories;
-    const target = newData.filter(item => key === item.key)[0];
-    if (target) {
-      delete target.editable;
-      this.props.dispatch({
-        type: 'model/setAsyncState',
-        payload: newData
-      });
-    }
-  }
-  cancel(key) {
-    const newData = [...this.state.data];
-    const target = newData.filter(item => key === item.key)[0];
-    if (target) {
-      Object.assign(target, this.cacheData.filter(item => key === item.key)[0]);
-      delete target.editable;
-      this.setState({ data: newData });
-    }
-  }
-  
   componentWillMount() {
     this.setState({
       hide: message.loading('载入数据中...', 0)
     });
   }
+  
+  edit = (record) => {
+    this.props.dispatch(routerRedux.push(`/dashboard/article-category/edit/${record.id}`));
+  };
   
   componentDidMount() {
     this.props.dispatch({
@@ -96,24 +60,6 @@ export default class ArticleCategory extends Component {
     });
   }
   
-  
-  deleteCategory = (id) => {
-    // this.props.dispatch(
-    //   {
-    //     type: 'model/deleteCategory',
-    //     payload: id,
-    //   }
-    // ).then(() => {
-    //   this.props.dispatch({
-    //     type: 'model/fetchCategories',
-    //     payload: {
-    //       pageNumber: 1,
-    //       pageSize: 20,
-    //     }
-    //   })
-    // });
-    console.log('delete');
-  };
   
   columns = [{
     title: 'id',
@@ -154,14 +100,16 @@ export default class ArticleCategory extends Component {
                   okText="Yes" cancelText="No">
           <Button size="small" type="danger">Delete</Button>
         </Popconfirm>*/}
-        <Button type="primary" size="small" style={{ marginRight: 10 }} onClick={() => { console.log('cancel') }}>Cancel</Button>
+                <Button type="primary" size="small" style={{ marginRight: 10 }} onClick={() => { console.log('cancel') }}>Cancel</Button>
       </span>
               : <a onClick={() => this.edit(record.key)}>Edit</a>
           }
         </div>
-        );
+      );
     },
   }];
+  
+  
   render() {
     return (
       <>
@@ -180,5 +128,4 @@ export default class ArticleCategory extends Component {
       </>
     )
   }
-  
 }

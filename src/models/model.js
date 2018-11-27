@@ -5,6 +5,7 @@ import { login } from '../services/login';
 import { getFileList } from '../services/file'
 import lodash from 'lodash';
 import {message} from 'antd';
+import BraftEditor from 'braft-editor';
 
 @model()
 export default class AppModel {
@@ -56,15 +57,15 @@ export default class AppModel {
   
   async login({ payload }) {
     let response = await login(payload);
-    // console.log('res', response, typeof response, response.message);
+    console.log('res', response, typeof response, response.message);
     if (response && response.hasOwnProperty('api_token')) {
       this.setState({
         token: response.api_token,
-        user: payload.username,
+        user: response.user_id,
       });
       if (window) {
         window.localStorage.setItem("nekohand_token", response.api_token);
-        window.localStorage.setItem("nekohand_administrator", payload.username);
+        window.localStorage.setItem("nekohand_administrator", response.user_id);
       }
       return true;
     } else {
@@ -110,6 +111,7 @@ export default class AppModel {
   async fetchPostById({payload}) {
     let response = await postFetch(payload);
     let responseData = lodash.cloneDeep(response.data);
+    responseData.body = BraftEditor.createEditorState(responseData.body);
     this.setState({
       post: responseData,
     });
