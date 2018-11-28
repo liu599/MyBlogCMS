@@ -5,7 +5,9 @@ import { login } from '../services/login';
 import { getFileList } from '../services/file'
 import lodash from 'lodash';
 import {message} from 'antd';
-import BraftEditor from 'braft-editor';
+import dynamic from "@symph/joy/dynamic";
+import React from "react";
+
 
 @model()
 export default class AppModel {
@@ -111,7 +113,6 @@ export default class AppModel {
   async fetchPostById({payload}) {
     let response = await postFetch(payload);
     let responseData = lodash.cloneDeep(response.data);
-    responseData.body = BraftEditor.createEditorState(responseData.body);
     this.setState({
       post: responseData,
     });
