@@ -6,7 +6,22 @@ import {routerRedux} from '@symph/joy/router';
 import config from '../../services/config'
 import {timeFormat} from '../../utils'
 import lodash from 'lodash';
-import {Button, Table} from 'antd';
+import {Button, Card, Upload, Icon} from 'antd';
+const { Meta } = Card;
+import Masonry from 'react-masonry-component';
+
+const props = {
+  action: 'https://bandori.nekohand.moe/upload',
+  listType: 'picture',
+  defaultFileList: [],
+};
+
+const masonryOptions = {
+  transitionDuration: 0
+};
+
+const imagesLoadedOptions = { background: '.my-bg-image-el' }
+
 
 @requireModel(DashboardModel)          // register model
 @controller((state) => {              // state is store's state
@@ -16,44 +31,18 @@ import {Button, Table} from 'antd';
 })
 
 export default class ResourceList extends Component {
-  
-  columns = [{
-    title: '序号',
-    dataIndex: 'fid',
-    width: '10%',
-  }, {
-    title: '上传时间',
-    dataIndex: 'modifiedAt',
-    width: '20%',
-    render: (text, record, index) => (
-      <span>
-        {timeFormat(record.modifiedAt)}
-      </span>
-    )
-  }, {
-    title: '标题',
-    dataIndex: 'filename',
-    width: '20%',
-  }, {
-    title: '预览',
-    dataIndex: 'preview',
-    width: '40%',
-    render: (text, record, index) => (
-      <span>
-        <img key={record.fileid} src={`${config.fileUrl}/${config.filemodules.nekofile}/${record.fileid}/`} alt="" style={{width: 200, height: 'auto'}}/>
-      </span>
-    )}
-  ];
-  
-  
+
+  state = {
+    fileList: [],
+    uploading: false,
+  };
+
   componentDidMount() {
     this.props.dispatch({
       type: 'model/filelist'
     });
   }
-  
-  
-  
+
   render() {
     return (
       <>
@@ -62,15 +51,44 @@ export default class ResourceList extends Component {
         </Head>
         <h2 style={{ marginBottom: 20 }}>资源列表</h2>
         <div style={{ marginBottom: 20 }}>
-          <Button type="primary" style={{ marginRight: 10 }} onClick={() => {
-            this.props.dispatch(routerRedux.push('/dashboard/resource-list/upload'));
-          }}>Upload</Button>
+          <Upload {...props} supportServerRender multiple onRemove={() => {
+            this.props.dispatch({
+              type: 'model/filelist'
+            });
+          }}>
+            <Button>
+              <Icon type="upload" /> Upload
+            </Button>
+          </Upload>
         </div>
-        <Table
-          scroll={{ y: 1200 }}
-          dataSource={this.props.model.files}
-          columns={this.columns}
-        />
+        <Masonry
+          className={'my-gallery-class'} // default ''
+          elementType={'ul'} // default 'div'
+          options={masonryOptions} // default {}
+          disableImagesLoaded={false} // default false
+          updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+          imagesLoadedOptions={imagesLoadedOptions} // default {}
+        >
+            {
+              this.props.model.files.map(item => {
+                return (
+                  <li className="image-element-class" style={{listStyle: 'none', padding: 8}}>
+                    <Card
+                      hoverable
+                      key={item.filehash}
+                      style={{ width: 240, float: 'left' }}
+                      cover={<img alt="example" src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileid}/`} />}
+                    >
+                      <Meta
+                        title={item.filehash}
+                        description={timeFormat(item.modifiedAt)}
+                      />
+                    </Card>
+                  </li>
+                )
+              })
+            }
+        </Masonry>
       </>
     )
   }

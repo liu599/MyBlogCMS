@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7886a19-5d4c-4c2a-82e7-9a4205ea1ef1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Article/BraftEditorElement.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Article/ArticleEdit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Article/ArticleEdit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Resource/ResourceList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Resource/ResourceList.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,16 +29,49 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/Article/BraftEditorElement.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="269" column="10" lean-forward="true" selection-start-line="269" selection-start-column="10" selection-end-line="269" selection-end-column="10" />
+            <state relative-caret-position="-268">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#226#273#0" expanded="true" />
-                <element signature="e#665#1711#0" />
-                <element signature="e#2343#5408#0" />
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Article/ArticleCategory.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="7" selection-start-column="7" selection-end-column="7" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Article/ArticleList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1519">
+              <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/Resource/ResourceList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="341">
+              <caret line="53" column="49" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,7 +147,6 @@
         <option value="$PROJECT_DIR$/src/controllers/DashboardController/dashboardController.js" />
         <option value="$PROJECT_DIR$/src/services/file.js" />
         <option value="$PROJECT_DIR$/src/components/Resource/index.js" />
-        <option value="$PROJECT_DIR$/src/components/Resource/ResourceList.js" />
         <option value="$PROJECT_DIR$/src/components/Resource/ResourceUpload.js" />
         <option value="$PROJECT_DIR$/src/index.css" />
         <option value="$PROJECT_DIR$/src/components/Article/EditableCell.js" />
@@ -129,6 +160,7 @@
         <option value="$PROJECT_DIR$/src/models/model.js" />
         <option value="$PROJECT_DIR$/src/components/Article/ArticleEdit.js" />
         <option value="$PROJECT_DIR$/src/components/Article/BraftEditorElement.js" />
+        <option value="$PROJECT_DIR$/src/components/Resource/ResourceList.js" />
       </list>
     </option>
   </component>
@@ -153,7 +185,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -183,12 +214,20 @@
               <item name="MyBlogCMS" type="b2602c69:ProjectViewProjectNode" />
               <item name="MyBlogCMS" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Resource" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MyBlogCMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MyBlogCMS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
@@ -204,7 +243,7 @@
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="9.2.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../starblog" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../NekohandCmsPro" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.jscs" value="true" />
@@ -1176,12 +1215,13 @@
       <workItem from="1543239026607" duration="2620000" />
       <workItem from="1543256748521" duration="617000" />
       <workItem from="1543328915218" duration="13119000" />
-      <workItem from="1543413069737" duration="11877000" />
+      <workItem from="1543413069737" duration="13968000" />
+      <workItem from="1543497935807" duration="5969000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="256758000" />
+    <option name="totallyTimeSpent" value="264818000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1283,13 +1323,6 @@
     <entry file="file://$PROJECT_DIR$/src/utils/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Resource/ResourceUpload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/file.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -1303,13 +1336,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/quill.snow.css" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/9.2.0/core-modules/module.js" />
-    <entry file="file://$PROJECT_DIR$/src/components/Resource/ResourceList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-715">
-          <caret line="41" column="12" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/quill/dist/quill.js" />
     <entry file="file://$PROJECT_DIR$/src/services/article.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1358,16 +1384,6 @@
           <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Article/ArticleList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1429,13 +1445,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/controllers/AppController/index.less">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1450,23 +1459,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
           <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Article/ArticleCategory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" selection-start-column="7" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1524,15 +1516,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Article/BraftEditorElement.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="269" column="10" lean-forward="true" selection-start-line="269" selection-start-column="10" selection-end-line="269" selection-end-column="10" />
+        <state relative-caret-position="31">
+          <caret line="247" column="42" selection-start-line="247" selection-start-column="42" selection-end-line="247" selection-end-column="42" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#226#273#0" expanded="true" />
-            <element signature="e#665#1711#0" />
-            <element signature="e#2343#5408#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-268">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Article/ArticleCategory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Article/ArticleList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1519">
+          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Resource/ResourceUpload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="558">
+          <caret line="18" column="17" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="18" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Resource/ResourceList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="53" column="49" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
