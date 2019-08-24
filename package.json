@@ -25,6 +25,7 @@
     "braft-extensions": "^0.0.10",
     "braft-utils": "^3.0.8",
     "draft-js-prism": "^1.0.6",
+    "express": "^4.17.1",
     "good-storage": "^1.0.1",
     "jsonp": "^0.2.1",
     "less": "^3.8.1",
