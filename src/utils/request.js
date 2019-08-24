@@ -4,9 +4,13 @@ import qs from 'qs';
 import jsonp from 'jsonp';
 import lodash from 'lodash';
 import pathToRegexp from 'path-to-regexp';
+import cache from './cache';
 
 const fetch = (options = {
+  method: 'get',
+  url: '',
   fetchType: 'CORS',
+  currentTimeStamp: Date.now(),
   data: {
     header: {},
   },
@@ -53,11 +57,19 @@ const fetch = (options = {
 };
 
 export default function request(options) {
+  console.log(options, 'options');
+  if (options.currentTimeStamp - cache.getStorage('lastRequestTime')  < 300) {
+    return new Error('请求速度过快');
+  } else {
+    console.log('正常请求');
+    cache.setStorage('lastRequestTime', options.currentTimeStamp);
+    console.log(cache.getStorage('lastRequestTime'));
+  }
   if (!options.hasOwnProperty('fetchType')) {
     options.fetchType = 'CORS';
   }
   if (options.fetchType === 'CORS') {
-    // console.log('跨域请求开始');
+    console.log('跨域请求开始');
     return fetch(options).then((response) => {
       console.log('response is', response);
       
@@ -80,14 +92,14 @@ export default function request(options) {
       let msg;
       let statusCode;
       if (response && response instanceof Object) {
-        const { data, statusText } = response;
-        statusCode = response.status;
-        msg = data.message || statusText;
+        const { data } = response;
+        statusCode = data.error.code;
+        msg = data.error.message;
       } else {
         statusCode = 600;
-        msg = error.message || 'Network Error';
+        msg = data.error.message || 'Network Error';
       }
-      return Promise.reject(new Error(JSON.stringify({ success: false, statusCode, message: msg }))).then(() => {}, (error) => {
+      return Promise.reject(new Error(JSON.stringify({ statusCode, message: msg }))).then(() => {}, (error) => {
         return error;
       });
     });

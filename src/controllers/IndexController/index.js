@@ -1,5 +1,5 @@
 import styles from './Login.less';
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {routerRedux} from '@symph/joy/router';
 import DataModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
@@ -9,17 +9,21 @@ const FormItem = Form.Item;
 @requireModel(DataModel)
 @controller(state => ({model: state.model}))
 
-class IndexController extends PureComponent {
+class IndexController extends Component {
+  btnStatus = false;
   onSubmit = e => {
     const {form: {validateFields}, dispatch} = this.props;
     e.preventDefault();
+    this.btnStatus = true;
     validateFields(async (err, data) => {
       if(/^[0-9]+$/.test(data.username)) {
         message.error('用户名不能是纯数字');
+        this.btnStatus = false;
         return;
       }
       if(/^[a-z0-9A-Z]+$/.test(data.password)) {
         message.error('密码必须包含特殊字符');
+        this.btnStatus = false;
         return;
       }
       const hide = message.loading('正在登陆中...');
@@ -50,6 +54,7 @@ class IndexController extends PureComponent {
           message: '登陆错误',
           description: '请输入正确的用户名和密码'
         });
+        this.btnStatus = false;
       }
     });
   };
@@ -85,14 +90,15 @@ class IndexController extends PureComponent {
             </FormItem>
             <Row>
               <Button className={styles.btn}
+                      disabled={this.btnStatus}
                       type="primary"
                       size="large"
                       htmlType="submit">
                 Sign in
               </Button>
-              <p className={styles.desc}>
-                <span>Ver7.0 Kasumi - ©2017-2018 Tokei </span>
-              </p>
+              <div className={styles.desc}>
+                <p>Version 7.0.5 Kasumi ©2017-2019 Tokei</p>
+              </div>
             </Row>
           </Form>
         </div>

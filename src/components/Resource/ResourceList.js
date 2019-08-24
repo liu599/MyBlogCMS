@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import Head from '@symph/joy/head';
 import DashboardModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller'
-import {routerRedux} from '@symph/joy/router';
 import config from '../../services/config'
 import {timeFormat} from '../../utils'
-import lodash from 'lodash';
 import {Button, Card, Upload, Icon} from 'antd';
 const { Meta } = Card;
 import Masonry from 'react-masonry-component';
@@ -17,7 +15,8 @@ const props = {
 };
 
 const masonryOptions = {
-  transitionDuration: 0
+  transitionDuration: 300,
+  fitWidth: true
 };
 
 const imagesLoadedOptions = { background: '.my-bg-image-el' }
@@ -72,14 +71,23 @@ export default class ResourceList extends Component {
             {
               this.props.model.files.map(item => {
                 return (
-                  <li className="image-element-class" style={{listStyle: 'none', padding: 8}}>
+                  <li key={item.filehash} className="image-element-class" style={{listStyle: 'none', padding: 8}}>
                     <Card
                       hoverable
-                      key={item.filehash}
-                      style={{ width: 240, float: 'left' }}
-                      cover={<img alt="example" src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileid}/`} />}
+                      key={item.fid}
+                      style={{ width: 240 }}
+                      actions={[
+                        <Icon type="setting" key="setting" />,
+                        <Icon type="edit" key="edit" />,
+                        <Icon type="ellipsis" key="ellipsis" />,
+                      ]}
+                      cover={<img key={item.filehash}
+                                  data-src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileid}/`}
+                                  src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileid}/`} />
+                      }
                     >
                       <Meta
+                        key={item.filehash}
                         title={item.filehash}
                         description={timeFormat(item.modifiedAt)}
                       />

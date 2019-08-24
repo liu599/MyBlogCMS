@@ -42,7 +42,7 @@ export default class BraftEditorElement extends React.Component {
           readOnly: false,
           editorState: BraftEditorElem.createEditorState(lodash.cloneDeep(self.props.model.post.body)),
         });
-        console.log(self.props, self.state,  'after fetch State');
+        // console.log(self.props, self.state,  'after fetch State');
       });
     } else {
       self.props.model.post = {
@@ -61,7 +61,7 @@ export default class BraftEditorElement extends React.Component {
   }
 
   handleChange =  (editorState) => {
-    console.log(typeof editorState.toHTML, 'editor state')
+    // console.log(typeof editorState.toHTML, 'editor state')
     let convertToHTML = editorState.toHTML;
     if (typeof convertToHTML === 'function') {
       this.setState({
@@ -243,15 +243,18 @@ export default class BraftEditorElement extends React.Component {
           title: '源代码编辑',
           confirmable: true,
           onConfirm: () => {
-            console.log('confirm', this.state);
+            // console.log('confirm', this.state);
             this.setState({
               editorState: BraftEditorElem.createEditorState(this.state.rawHTML),
               outputHTML: this.state.rawHTML,
             })
           },
           children: (
-            <div style={{width: 1100, padding: '0 10px'}}>
-              <TextArea autosize={{ minRows: 4 }} defaultValue={this.state.outputHTML} onChange={this.toRawHtml}/>
+            <div style={{minWidth: '960px', padding: '10px 10px'}}>
+              <TextArea autosize={{ minRows: 4, maxRows: 12 }}
+                        defaultValue={this.state.outputHTML}
+                        onChange={this.toRawHtml}
+              />
             </div>
           ),
         }

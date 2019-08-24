@@ -1,6 +1,6 @@
 export default {
   rootUrl: 'https://www.blog.nekohand.moe',
-  fileUrl: 'http://bandori.nekohand.moe',
+  fileUrl: 'https://bandori.nekohand.moe',
   filemodules: {
     upload: 'upload',
     nekofile: 'nekofile'

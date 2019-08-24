@@ -167,8 +167,6 @@ class ArticleEdit extends Component {
             this.props.dispatch(routerRedux.push('/dashboard/article-list'));
           }, 400);
         }
-      }, (err) => {
-        message.error(err)
       });
     });
   };

@@ -36,6 +36,7 @@ export async function postCreation(data) {
   return request({
     url: `${configs.genUrl(configs.backend, configs.modules.backend.postEdit)}`,
     method: 'post',
+    currentTimeStamp: Date.now(),
     data,
   })
 }
@@ -45,6 +46,7 @@ export async function postDelete(data) {
   return request({
     url: `${configs.genUrl(configs.backend, configs.modules.backend.postDelete)}`,
     method: 'post-form',
+    currentTimeStamp: Date.now(),
     data,
   })
 }

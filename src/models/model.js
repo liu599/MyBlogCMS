@@ -47,9 +47,14 @@ export default class AppModel {
     console.log(response);
     if (response && response.data) {
       let responseData = response.data;
-      responseData.forEach(item => {
+      responseData.forEach((item, index, responseData) => {
         item.key = item.filehash;
+        let fileType = item.filename.split('.');
+        if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {
+          responseData.splice(index, 1);
+        }
       });
+      
       this.setState({
         files: responseData,
       })
@@ -79,9 +84,12 @@ export default class AppModel {
   async fetchPostsList({ payload }) {
     let response = await postsFetch(payload);
     // let {posts} = this.getState();
-    let responseData = lodash.cloneDeep(response.data).reverse();
+    let responseData = lodash.cloneDeep(response.data);
     responseData.forEach(item => {
       item.key = item.pid;
+    });
+    responseData.sort((a, b) => {
+      return b.createdAt - a.createdAt;
     });
     this.setState({
       post: {

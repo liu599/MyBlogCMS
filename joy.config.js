@@ -4,7 +4,7 @@ const withImageLoader = require('@symph/joy-image')
 const path = require('path')
 
 module.exports = {
-  serverRender: true,
+  serverRender: false,
   plugins: [
     withImageLoader({limit: 8192}),
     // 处理应用内组件的less样式
