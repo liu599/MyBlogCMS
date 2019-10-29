@@ -1,6 +1,6 @@
 export default {
-  rootUrl: 'https://www.blog.nekohand.moe',
-  fileUrl: 'https://bandori.nekohand.moe',
+  rootUrl: 'https://kasumi.ecs32.top',
+  fileUrl: 'https://mltd.ecs32.top',
   filemodules: {
     upload: 'upload',
     nekofile: 'nekofile'

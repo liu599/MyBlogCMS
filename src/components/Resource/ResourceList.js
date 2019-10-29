@@ -7,9 +7,10 @@ import {timeFormat} from '../../utils'
 import {Button, Card, Upload, Icon} from 'antd';
 const { Meta } = Card;
 import Masonry from 'react-masonry-component';
+import {default as configs} from '../../services/config';
 
 const props = {
-  action: 'https://bandori.nekohand.moe/upload',
+  action: `${(configs.fileUrl)}/${configs.filemodules.upload}`,
   listType: 'picture',
   defaultFileList: [],
 };

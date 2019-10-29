@@ -35,8 +35,8 @@ class IndexController extends Component {
       if (isSuccess !== null) {
         notification.success({
           duration: 1,
-          message: '登陆成功',
-          description: '欢迎登陆管理系统'
+          message: '验证成功',
+          description: '用户名验证通过， 正在获取数据中....'
         });
         await dispatch({
           type: 'model/fetchPostsList',
@@ -52,7 +52,7 @@ class IndexController extends Component {
         notification.error({
           duration: 2,
           message: '登陆错误',
-          description: '请输入正确的用户名和密码'
+          description: '服务器可能无响应'
         });
         this.btnStatus = false;
       }
