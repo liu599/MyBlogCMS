@@ -47,14 +47,15 @@ class IndexController extends Component {
         });
         setTimeout(() => {
           dispatch(routerRedux.push('/dashboard/article-list'));
-        }, 1000);
+        }, 500);
       } else {
+        let erblock = JSON.parse(this.props.model.error.msg);
+        this.btnStatus = false;
         notification.error({
           duration: 2,
           message: '登陆错误',
-          description: '服务器可能无响应'
+          description: `错误代码${erblock.statusCode}: ${erblock.message}`
         });
-        this.btnStatus = false;
       }
     });
   };
@@ -97,7 +98,7 @@ class IndexController extends Component {
                 Sign in
               </Button>
               <div className={styles.desc}>
-                <p>Version 7.0.5 Kasumi ©2017-2019 Tokei</p>
+                <p>Version 7.2.0 Kasumi ©2017-2019 Tokei</p>
               </div>
             </Row>
           </Form>
@@ -105,8 +106,8 @@ class IndexController extends Component {
       </React.Fragment>
     );
   }
-  
-  
+
+
 }
 
 export default Form.create()(IndexController);

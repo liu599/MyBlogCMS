@@ -20,7 +20,7 @@ const fetch = (options = {
     data,
     url,
   } = options;
-  
+
   const cloneData = lodash.cloneDeep(data);
   cloneData && delete cloneData.headers;
   if (!options.data) {
@@ -72,7 +72,7 @@ export default function request(options) {
     console.log('跨域请求开始');
     return fetch(options).then((response) => {
       console.log('response is', response);
-      
+
       const { statusText, status } = response;
       let { data } = response;
       if (data instanceof Array) {
@@ -80,7 +80,7 @@ export default function request(options) {
           list: data,
         };
       }
-      
+
       return Promise.resolve({
         success: true,
         message: statusText,
@@ -93,11 +93,11 @@ export default function request(options) {
       let statusCode;
       if (response && response instanceof Object) {
         const { data } = response;
-        statusCode = data.error.code;
-        msg = data.error.message;
+        statusCode = data.error ? data.error.code : 500;
+        msg = data.error ? data.error.message : "unable to reach the source";
       } else {
         statusCode = 600;
-        msg = data.error.message || 'Network Error';
+        msg =  'Network Error';
       }
       return Promise.reject(new Error(JSON.stringify({ statusCode, message: msg }))).then(() => {}, (error) => {
         return error;

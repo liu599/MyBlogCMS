@@ -1,3 +1,34 @@
+POST https://mltd.ecs32.top/filetype
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+filetype=mp3
+
+<> 2019-11-30T113137.200.json
+
+###
+
+POST https://mltd.ecs32.top/filetype
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+{filetype: mp3}
+
+<> 2019-11-30T112939.200.json
+
+###
+
+POST https://mltd.ecs32.top/filetype?filetype=mp3
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+<> 2019-11-30T112538.200.json
+
+###
+
 GET https://bandori.nekohand.moe/filelist
 Accept: */*
 Cache-Control: no-cache

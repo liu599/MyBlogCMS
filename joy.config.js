@@ -2,9 +2,11 @@ const withCss = require('@symph/joy-css')
 const withLess = require('@symph/joy-less')
 const withImageLoader = require('@symph/joy-image')
 const path = require('path')
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   serverRender: false,
+  assetPrefix: isProd ? 'https://tae.ecs32.top' : '',
   plugins: [
     withImageLoader({limit: 8192}),
     // 处理应用内组件的less样式

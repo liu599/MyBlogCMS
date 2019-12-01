@@ -38,9 +38,16 @@ export default class ResourceList extends Component {
   };
 
   componentDidMount() {
+    // this.props.dispatch({
+    //   type: 'model/filelist'
+    // });
     this.props.dispatch({
-      type: 'model/filelist'
+      type: 'model/filelistbytype',
+      payload: {
+        filetype: 'png'
+      }
     });
+
   }
 
   render() {

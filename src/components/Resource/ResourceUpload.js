@@ -3,7 +3,7 @@ import { Upload, Button, Icon } from 'antd';
 
 const props = {
   // action: 'http://localhost:17699/upload',
-  action: 'https://bandori.nekohand.moe/upload',
+  action: 'https://mltd.ecs32.top/upload',
   listType: 'picture',
   defaultFileList: [],
 };

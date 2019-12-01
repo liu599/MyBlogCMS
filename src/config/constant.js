@@ -66,8 +66,8 @@ export const menu = [{
 }, {
   id: 19,
   pid: 4,
-  name: '资源权限',
-  path: 'resource-group',
+  name: '资源工具',
+  path: 'resource-tools',
 }, {
   id: 20,
   pid: 5,

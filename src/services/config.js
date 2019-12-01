@@ -3,7 +3,10 @@ export default {
   fileUrl: 'https://mltd.ecs32.top',
   filemodules: {
     upload: 'upload',
-    nekofile: 'nekofile'
+    nekofile: 'nekofile',
+    fix: 'fix',
+    filetype: 'filelist',
+    filelist: 'filelist',
   },
   relativePath: '/api/nekohand/v2/',
   frontend: 'frontend',
@@ -31,7 +34,7 @@ export default {
   genUrl: function (module, name) {
     return `${this.rootUrl}${this.relativePath}${module}/${name}`
   },
-  genFileUrl: function(module, name) {
-    return `${this.fileUrl}/${module}/${name}`
+  genFileUrl: function(module) {
+    return `${this.fileUrl}/${module}`
   }
 }

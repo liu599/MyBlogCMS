@@ -18,7 +18,7 @@ const SET_STORAGE = (key, content) => {
   return storage.session.set(key, content);
 };
 const GET_STORAGE = (key) => {
-  console.log(storage.session);
+  // console.log(storage.session);
   return storage.session.get(key, 'TOKEN NOT FOUND');
 };
 

@@ -9,7 +9,7 @@ import AppController from './controllers/AppController'
 import ArticleComponents from './components/Article'
 import ResourceComponents from './components/Resource'
 
-// 加载业务组件 
+// 加载业务组件
 import loading from './components/Loading'
 
 const DashboardController = dynamic({loader: () => import('./controllers/DashboardController/dashboardController'), loading});
@@ -35,6 +35,7 @@ export default class Main extends Component {
                   <Route path="/dashboard/article-category/edit/:cid" component={ArticleComponents.ArticleCategoryEdit} />
                   <Route exact path="/dashboard/resource-list" component={ResourceComponents.ResourceList} />
                   <Route exact path="/dashboard/resource-list/upload" component={ResourceComponents.ResourceUpload}/>
+                  <Route exact path="/dashboard/resource-tools" component={ResourceComponents.ResourceFix} />
                   <Route component={() => (<div>Waiting for the development..</div>)}/>
                 </Switch>
               </DashboardController>
