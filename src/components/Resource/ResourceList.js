@@ -44,7 +44,7 @@ export default class ResourceList extends Component {
     this.props.dispatch({
       type: 'model/filelistbytype',
       payload: {
-        filetype: 'png'
+        fileType: 'png'
       }
     });
 
@@ -79,24 +79,24 @@ export default class ResourceList extends Component {
             {
               this.props.model.files.map(item => {
                 return (
-                  <li key={item.filehash} className="image-element-class" style={{listStyle: 'none', padding: 8}}>
+                  <li key={item.hashId} className="image-element-class" style={{listStyle: 'none', padding: 8}}>
                     <Card
                       hoverable
-                      key={item.fid}
+                      key={item.FileNo}
                       style={{ width: 240 }}
                       actions={[
                         <Icon type="setting" key="setting" />,
                         <Icon type="edit" key="edit" />,
                         <Icon type="ellipsis" key="ellipsis" />,
                       ]}
-                      cover={<img key={item.filehash}
-                                  data-src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileid}/`}
-                                  src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileid}/`} />
+                      cover={<img key={item.hashId}
+                                  data-src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileId}/`}
+                                  src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileId}/`} />
                       }
                     >
                       <Meta
-                        key={item.filehash}
-                        title={item.filehash}
+                        key={item.hashId}
+                        title={item.hashId}
                         description={timeFormat(item.modifiedAt)}
                       />
                     </Card>

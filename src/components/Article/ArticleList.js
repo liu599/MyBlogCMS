@@ -12,29 +12,41 @@ import {routerRedux} from '@symph/joy/router';
   }
 })
 export default class ArticleList extends Component {
-  
+
   state = {
     hide: () => null,
   };
-  
-  componentWillMount() {
-    this.setState({
-      hide: message.loading('载入数据中...', 0)
-    });
-  }
-  
+
   componentDidMount() {
-    this.props.dispatch({
-      type: 'model/fetchPostsList',
-      payload: {
-        pageNumber: 1,
-        pageSize: 20,
-      }
-    }).then(() => {
-      this.state.hide();
-    });
+    if (window.localStorage.hasOwnProperty('nekohand_token') &&
+      window.localStorage.hasOwnProperty('nekohand_administrator')) {
+      this.setState({
+        hide: message.loading('载入数据中...', 0)
+      });
+      this.props.dispatch({
+        type: 'model/fetchPostsList',
+        payload: {
+          pageNumber: 1,
+          pageSize: 50,
+        }
+      }).then(() => {
+        this.state.hide();
+      });
+    } else {
+      this.setState({
+        hide: message.loading('未找到登陆信息， 即将返回', 1000)
+      });
+      setTimeout(() => {
+        this.state.hide();
+      }, 1000);
+      setTimeout(() => {
+        this.props.dispatch(routerRedux.push('/'));
+      }, 1100);
+
+    }
+
   }
-  
+
   deletePost = (id) => {
     this.props.dispatch(
       {
@@ -47,12 +59,12 @@ export default class ArticleList extends Component {
         type: 'model/fetchPostsList',
         payload: {
           pageNumber: 1,
-          pageSize: 20,
+          pageSize: 50,
         }
       })
     });
   };
-  
+
   columns = [{
     title: '序号',
     dataIndex: 'pid',
@@ -83,11 +95,11 @@ export default class ArticleList extends Component {
         });}} okText="Yes" cancelText="No">
           <Button type="danger">Delete</Button>
         </Popconfirm>
-        
+
       </span>
     ),
   }];
-  
+
   render() {
     return (
       <div>
@@ -108,5 +120,5 @@ export default class ArticleList extends Component {
       </div>
     );
   }
-  
+
 }

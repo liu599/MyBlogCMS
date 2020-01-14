@@ -49,8 +49,8 @@ export default class AppModel {
     if (response && response.data) {
       let responseData = response.data;
       responseData.forEach((item, index, responseData) => {
-        item.key = item.filehash;
-        let fileType = item.filename.split('.');
+        item.key = item.hashId;
+        let fileType = item.filetype;
         if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {
           responseData.splice(index, 1);
         }
@@ -69,7 +69,7 @@ export default class AppModel {
     if (response && response.data) {
       let responseData = response.data;
       responseData.forEach((item, index, responseData) => {
-        item.key = item.filehash
+        item.key = item.hashId
       });
       this.setState({files: responseData})
     }
@@ -86,7 +86,7 @@ export default class AppModel {
 
   async login({ payload }) {
     let response = await login(payload);
-    console.log('res', response, typeof response, response.message);
+    // console.log('res', response, typeof response, response.message);
     if (response && response.hasOwnProperty('api_token')) {
       this.setState({
         token: response.api_token,

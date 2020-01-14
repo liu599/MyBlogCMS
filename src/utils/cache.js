@@ -22,10 +22,18 @@ const GET_STORAGE = (key) => {
   return storage.session.get(key, 'TOKEN NOT FOUND');
 };
 
+const LIST_STORAGE = () =>  {
+  return {
+    session: storage.session,
+    local: storage
+  }
+};
+
 export default {
   setStorage: SET_STORAGE,
   getStorage: GET_STORAGE,
   set: SET_TOKEN,
   get: GET_TOKEN,
   remove: REMOVE_TOKEN,
+  list: LIST_STORAGE,
 };

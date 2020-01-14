@@ -2,20 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7886a19-5d4c-4c2a-82e7-9a4205ea1ef1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Resource/Resource.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Resource/ResourceFix.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/_document.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/_error.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/background.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joy.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/joy.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Article/ArticleEdit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Article/ArticleEdit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Article/ArticleList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Article/ArticleList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Article/BraftEditorElement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Article/BraftEditorElement.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Resource/ResourceList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Resource/ResourceList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Resource/ResourceUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Resource/ResourceUpload.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Resource/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Resource/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/constant.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/constant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/AppController/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/AppController/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/AppController/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/AppController/index.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/DashboardController/dashboardController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/DashboardController/dashboardController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/IndexController/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/IndexController/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/file.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/file.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/article.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/article.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/cache.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/cache.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/request.js" afterDir="false" />
     </list>
@@ -50,19 +51,6 @@
     </option>
     <option name="SCHEME" value="Project" />
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>nib</find>
-      <find>a</find>
-      <find>alpha</find>
-      <find>:</find>
-      <find>;</find>
-      <find>login</find>
-      <find>url</find>
-      <find>YQL</find>
-      <find>console.log</find>
-    </findStrings>
-  </component>
   <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -93,6 +81,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Project/MyBlog/client/nhblog/src/redux/reducers/pagerReducer.js" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -121,15 +110,15 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Project\MyBlog\client\nhadmin\public" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\MyBlogCMS\src" />
       <recent name="D:\Project\MyBlogCMS\src\services" />
       <recent name="D:\Project\MyBlogCMS" />
-      <recent name="D:\Project\MyBlogCMS\src" />
       <recent name="D:\Project\MyBlog\client\nhadmin\dist" />
       <recent name="D:\Project\MyBlog\client\nhadmin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project\MyBlog\client\nhadmin\public" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -1187,7 +1176,12 @@
       <workItem from="1572375406954" duration="22000" />
       <workItem from="1575124807522" duration="3731000" />
       <workItem from="1575191043181" duration="1554000" />
-      <workItem from="1575197328325" duration="12309000" />
+      <workItem from="1575197328325" duration="13260000" />
+      <workItem from="1575993333499" duration="1576000" />
+      <workItem from="1576338772294" duration="42000" />
+      <workItem from="1578215431810" duration="10883000" />
+      <workItem from="1578800171793" duration="23000" />
+      <workItem from="1579009007866" duration="9071000" />
     </task>
     <servers />
   </component>
@@ -1209,10 +1203,10 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1575197336156">
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1578800192774">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1575197336156" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1578800192774" />
     <state x="740" y="324" key="RestClientTextRequest" timestamp="1575127894992">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

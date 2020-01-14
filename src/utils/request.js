@@ -29,7 +29,24 @@ const fetch = (options = {
     }
   }
   // options.data && console.log(options.data.headers);
-  const httpInstance = axios.create({headers: options.data.headers});
+  const httpInstance = axios.create({headers: options.data.headers, withCredentials: true});
+  httpInstance.interceptors.request.use(req => {
+    // console.log('req', cache.list());
+    let token = cache.getStorage("nekohand_token");
+    let user_id = cache.getStorage("nekohand_administrator");
+    // console.log(token, user_id);
+    return req;
+  }, err => {
+    // console.log('error', err);
+    return Promise.reject(err);
+  });
+  httpInstance.interceptors.response.use(res => {
+    // console.log('res', res);
+    return res;
+  }, err => {
+    return Promise.reject(err);
+  });
+
   url = pathToRegexp.compile(url)(data);
   switch (method.toLowerCase()) {
     case 'get':
@@ -57,21 +74,21 @@ const fetch = (options = {
 };
 
 export default function request(options) {
-  console.log(options, 'options');
+  // console.log(options, 'options');
   if (options.currentTimeStamp - cache.getStorage('lastRequestTime')  < 300) {
     return new Error('请求速度过快');
   } else {
-    console.log('正常请求');
+    // console.log('正常请求');
     cache.setStorage('lastRequestTime', options.currentTimeStamp);
-    console.log(cache.getStorage('lastRequestTime'));
+    // console.log(cache.getStorage('lastRequestTime'));
   }
   if (!options.hasOwnProperty('fetchType')) {
     options.fetchType = 'CORS';
   }
   if (options.fetchType === 'CORS') {
-    console.log('跨域请求开始');
+    // console.log('跨域请求开始');
     return fetch(options).then((response) => {
-      console.log('response is', response);
+      // console.log('response is', response);
 
       const { statusText, status } = response;
       let { data } = response;

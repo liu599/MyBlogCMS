@@ -9,10 +9,6 @@ import '../../editor.css'
 import 'braft-extensions/dist/code-highlighter.css'
 import controller, {requireModel} from '@symph/joy/controller'
 import {routerRedux} from '@symph/joy/router';
-// import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
-// // 首先需要从prismjs中引入需要扩展的语言库
-// import 'prismjs/components/prism-java'
-// import 'prismjs/components/prism-php'
 import moment from 'moment';
 const BraftEditor = dynamic({loader: () => import('./BraftEditorElement')}, {
   ssr: false
@@ -68,20 +64,20 @@ const tailFormItemLayout = {
 })
 
 class ArticleEdit extends Component {
-  
+
   state = {
     hide: () => null,
     dataIndex: undefined,
     readOnly: true,
     editorState: '',
   };
-  
+
   componentWillMount() {
     this.setState({
       hide: message.loading('载入数据中...', 0)
     });
   }
-  
+
   componentDidMount() {
     let self = this;
     self.props.dispatch({
@@ -117,14 +113,21 @@ class ArticleEdit extends Component {
   }
 
   onSetValue = (body) => {
+    console.log(body, 'body');
     this.props.form.setFieldsValue({
       body
     });
   };
-  
-  
+
+  // 父组件调用子组件方法进行存储数据。
+  onRef = (ref) => {
+    this.child = ref;
+  };
+
   onSubmit = e => {
     const {form: {validateFields}, dispatch} = this.props;
+    console.log(this.props.model.post);
+    this.child.saveCurrent();
     e.preventDefault();
     validateFields(async (err, data) => {
       // console.log('data', data, this.props);
@@ -156,6 +159,8 @@ class ArticleEdit extends Component {
       if (this.dataIndex !== 'undefined') {
         pdata.id = this.props.model.post.id;
       }
+      // 将空的段落转化为回车。
+      // pdata.body = pdata.body.replace(/\<p\>\<\/p\>/gi, `<br/>`);
       console.log("pdata to post", pdata);
       this.props.dispatch({
         type: 'model/createPost',
@@ -253,7 +258,7 @@ class ArticleEdit extends Component {
                 },
               ],
               initialValue: this.props.model.post.slug,
-            })(<TextArea autosize={{ minRows: 1, maxRows: 2 }} placeholder="post slug" />)}
+            })(<TextArea autosize={{ minRows: 1, maxRows: 6 }} placeholder="post slug" />)}
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -286,18 +291,19 @@ class ArticleEdit extends Component {
                   message: 'Please write body',
                 },
               ],
-            })(<BraftEditor setValue={this.onSetValue} />)}
+            })(<BraftEditor setValue={this.onSetValue} onRef={this.onRef} />)}
           </FormItem>
           <FormItem
             {...tailFormItemLayout}
           >
-            <Button style={{ marginRight: 10 }} type="default" size="large" onClick={() => { this.props.dispatch(routerRedux.push('/dashboard/article-list')); }}>
+            <Button style={{ marginRight: 10 }} type="default" size="large"
+                    onClick={() => { this.props.dispatch(routerRedux.push('/dashboard/article-list')); }}>
               Back
             </Button>
             <Button type="primary"
                     size="large"
                     htmlType="submit">
-              Submit
+              Save & Submit
             </Button>
           </FormItem>
         </Form>

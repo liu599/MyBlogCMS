@@ -1,4 +1,4 @@
-export const menu = [{
+export const LeftMenu = [{
   id: 1,
   name: '用户管理',
   icon: 'user',

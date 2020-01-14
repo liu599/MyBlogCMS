@@ -1,6 +1,6 @@
 {
   "name": "nekohand-blog-content-manage-system",
-  "version": "7.0.0",
+  "version": "7.3.0",
   "description": "Nekohand blog专用内容管理系统",
   "main": "index.js",
   "keywords": [

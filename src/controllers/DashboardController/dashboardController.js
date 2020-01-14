@@ -3,7 +3,7 @@ import { Layout, Menu, Breadcrumb, Icon, Button, Modal } from 'antd';
 import Head from '@symph/joy/head';
 import WebsiteInfo from '../../components/Layout';
 import { arrayToTree } from '../../utils';
-import { menu } from '../../config/constant';
+import { LeftMenu } from '../../config/constant';
 import {Switch, Route, Link, routerRedux} from '@symph/joy/router'
 import DashboardModel from '../../models/model'
 import controller, {requireModel} from '@symph/joy/controller'
@@ -15,24 +15,24 @@ const MenuItem = Menu.Item;
 
 const keyGenerator = k => (`nh-${k}`);
 
-const onSelectModule = (e, dispatch) => {
+const onSelectModule = (dispatch) => {
   // console.log(e);
   return null;
 };
 
 const generateMenu = (menuTree, dispatch) => {
   const mode = 'inline';
-  const defaultOpenKeys = [String(menuTree[0].children[0].id)];
-  const defaultSelectedKeys = menuTree.map((menuItem) => {
+  const defaultSelectedKey = [`nh-${String(menuTree[1].children[0].id)}`];
+  const defaultOpenKeys = menuTree.map((menuItem) => {
     return `nh-${menuItem.id}`;
   });
   return (
     <Menu
       mode={mode}
-      // defaultSelectedKeys={defaultOpenKeys}
-      defaultOpenKeys={defaultSelectedKeys}
+      defaultSelectedKeys={defaultSelectedKey}
+      defaultOpenKeys={defaultOpenKeys}
       style={{ height: '100%', borderRight: 0 }}
-      onSelect={() => onSelectModule(event, dispatch)}
+      onSelect={() => onSelectModule(dispatch)}
     >
       {generateSubMenu(menuTree)}
     </Menu>
@@ -43,7 +43,7 @@ const generateSubMenu = (menuTree) => {
   // console.log('mmm', menuTree);
   return menuTree.map((menuItem, index) => {
     if (menuItem.children && menuItem.children.length > 0) {
-      // console.log('进入条件', keyGenerator(index));
+      // console.log('进入条件', keyGenerator(menuItem.id));
       return (
         <SubMenu
           key={keyGenerator(menuItem.id)}
@@ -71,21 +71,21 @@ const generateSubMenu = (menuTree) => {
   }
 })
 export default class DashboardController extends Component {
-  
+
   state = {
     ModalText: '确认退出管理系统?',
     visible: false,
     confirmLoading: false,
   };
-  
-  
+
+
   showModal = () => {
-    console.log(this.props);
+    // console.log(this.props);
     this.setState({
       visible: true,
     });
   };
-  
+
   handleOk = () => {
     this.setState({
       ModalText: '正在退出管理系统.....',
@@ -103,18 +103,18 @@ export default class DashboardController extends Component {
       this.props.dispatch(routerRedux.push('/'));
     }, 1000);
   };
-  
+
   handleCancel = () => {
     console.log('Clicked cancel button');
     this.setState({
       visible: false,
     });
   };
-  
+
   async logout() {
-  
+
   }
-  
+
   async fetchServerInfo() {
     let {dispatch} = this.props;
     await dispatch({
@@ -124,24 +124,29 @@ export default class DashboardController extends Component {
       type: 'model/fetchPostsList',
       payload: {
         pageNumber: 1,
-        pageSize: 20,
+        pageSize: 50,
       }
     });
     console.log(this.props);
   }
-  
+
   render() {
     return (
       <Layout>
         <Head>
           <title>Dashboard</title>
         </Head>
-        <Header style={{ background: '#666', marginBottom: '20px', textAlign: 'right' }} >
-          <Button onClick={() => { this.showModal(); }}> Log out</Button>
+        <Header style={{ background: '#908', paddingBottom: '20px', margin: 0, marginBottom: '10px'}} >
+          <div style={{display: 'inline-block', color: 'pink', fontSize: '20px', marginLeft: '4%'}}>
+            <div>
+              Nekohand Content Manage System (Beta)
+            </div>
+          </div>
+          <Button style={{float: 'right', margin: '16px 50px 0 0'}} onClick={() => { this.showModal(); }}> Log out</Button>
         </Header>
         <Layout>
           <Sider width={160} style={{ background: '#fff', minHeight: '100vh', padding: '10px 0' }}>
-            {generateMenu(arrayToTree(menu), this.props.dispatch)}
+            {generateMenu(arrayToTree(LeftMenu), this.props.dispatch)}
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
             <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
@@ -163,5 +168,5 @@ export default class DashboardController extends Component {
       </Layout>
     );
   }
-  
+
 }

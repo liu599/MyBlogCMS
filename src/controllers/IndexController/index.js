@@ -42,7 +42,7 @@ class IndexController extends Component {
           type: 'model/fetchPostsList',
           payload: {
             pageNumber: 1,
-            pageSize: 20,
+            pageSize: 50,
           }
         });
         setTimeout(() => {
@@ -98,7 +98,7 @@ class IndexController extends Component {
                 Sign in
               </Button>
               <div className={styles.desc}>
-                <p>Version 7.2.0 Kasumi ©2017-2019 Tokei</p>
+                <p>Version 7.3.0 Kasumi ©2017-2020 Tokei</p>
               </div>
             </Row>
           </Form>

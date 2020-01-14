@@ -18,13 +18,14 @@ export default class BraftEditorElement extends React.Component {
 
   state = {
     hide: () => null,
-    editorState: BraftEditorElem.createEditorState('<p>Initial State</p>'),
+    editorState: BraftEditorElem.createEditorState('<p>删除这段话来开始编辑内容</p>'),
     readOnly: true,
-    outputHTML: '',
-    rawHTML: ''
+    rawHTML: '<p>删除这段话来开始编辑内容</p>',
   };
 
   componentDidMount() {
+    console.log('component did mount');
+    this.props.onRef(this);
     let self = this;
     if (window && window.location.pathname.includes('edit')) {
 
@@ -41,6 +42,7 @@ export default class BraftEditorElement extends React.Component {
         this.setState({
           readOnly: false,
           editorState: BraftEditorElem.createEditorState(lodash.cloneDeep(self.props.model.post.body)),
+          rawHTML: self.props.model.post.body,
         });
         // console.log(self.props, self.state,  'after fetch State');
       });
@@ -55,32 +57,34 @@ export default class BraftEditorElement extends React.Component {
       };
       self.state.hide();
       this.setState({
-        readOnly: false
+        readOnly: false,
+        rawHTML: '<p>New Article</p>',
       });
     }
   }
 
   handleChange =  (editorState) => {
-    // console.log(typeof editorState.toHTML, 'editor state')
-    let convertToHTML = editorState.toHTML;
-    if (typeof convertToHTML === 'function') {
-      this.setState({
-        editorState,
-        outputHTML: editorState.toHTML(),
-      });
-      this.props.setValue(this.state.editorState.toHTML());
-    }
-    //
-    // this.props.dispatch({
-    //   type: 'model/setAsyncState',
-    //   payload: {
-    //     post: {
-    //       body: '',
-    //     }
-    //   }
-    // }).then(() => {
-    //   console.log(this.props);
-    // });
+     // console.log(typeof editorState.toHTML, 'editor state', editorState)
+    let self = this;
+    this.setState({
+      editorState,
+      rawHTML: editorState.toHTML(),
+    });
+    lodash.debounce(() => {
+      self.props.setValue(self.state.editorState.toHTML());
+    }, 300, {'maxWait': 1000});
+    // lodash.throttle(() => {
+    //   console.log("set value");
+    //   self.props.setValue(self.state.editorState.toHTML());
+    // }, 5000);
+    // let convertToHTML = editorState.toHTML;
+    // if (typeof convertToHTML === 'function') {
+      // this.setState({
+      //   editorState,
+      //   rawHTML: editorState.toHTML(),
+      // });
+      // this.props.setValue(this.state.editorState.toHTML());
+    // }
   };
 
   preview = () => {
@@ -205,11 +209,18 @@ export default class BraftEditorElement extends React.Component {
         </body>
       </html>
     `
-
   };
 
+  saveCurrent = (e) => {
+    this.props.setValue(this.state.editorState.toHTML());
+  };
+
+
   toRawHtml =  (e) => {
-      // console.log('new HTML', e.currentTarget.value);
+      console.log('new HTML', e.currentTarget.value);
+      // let regEx_style = `<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>`;
+      // let bbb = regEx_style.match(e.currentTarget.value);
+      // console.log(bbb);
       this.setState({
         rawHTML: e.currentTarget.value,
       })
@@ -220,13 +231,19 @@ export default class BraftEditorElement extends React.Component {
       'letter-spacing',
       'line-height',
       'clear',
-      'remove-styles',
       'superscript',
       'subscript',
       'hr',
     ];
 
     const extendControls = [
+      'media',
+      {
+        key: 'custom-save',
+        type: 'button',
+        text: '保存数据',
+        onClick: this.saveCurrent
+      },
       {
         key: 'custom-button',
         type: 'button',
@@ -237,22 +254,20 @@ export default class BraftEditorElement extends React.Component {
         key: 'custom-button-raw',
         type: 'modal',
         text: '源代码',
-
         modal: {
           id: 'my-moda-1',
           title: '源代码编辑',
           confirmable: true,
           onConfirm: () => {
-            // console.log('confirm', this.state);
             this.setState({
               editorState: BraftEditorElem.createEditorState(this.state.rawHTML),
-              outputHTML: this.state.rawHTML,
+              rawHTML: this.state.rawHTML,
             })
           },
           children: (
             <div style={{minWidth: '960px', padding: '10px 10px'}}>
               <TextArea autosize={{ minRows: 4, maxRows: 12 }}
-                        defaultValue={this.state.outputHTML}
+                        defaultValue={this.state.rawHTML}
                         onChange={this.toRawHtml}
               />
             </div>
@@ -263,7 +278,7 @@ export default class BraftEditorElement extends React.Component {
     return (
       <div>
         <BraftEditorElem
-          placeholder="post body"
+          placeholder="write post here."
           excludeControls={excludeControls}
           extendControls={extendControls}
           defaultValue = {this.state.editorState}
