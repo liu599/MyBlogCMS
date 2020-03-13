@@ -1,6 +1,7 @@
 export default {
   rootUrl: 'https://kasumi.ecs32.top',
   fileUrl: 'https://mltd.ecs32.top',
+  fileRootUrl: 'https://file.ecs32.top/data',
   filemodules: {
     upload: 'upload',
     nekofile: 'nekofile',

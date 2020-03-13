@@ -1,12 +1,12 @@
 import React from 'react';
 import BraftEditorElem from 'braft-editor';
+import { ContentUtils } from 'braft-utils';
 import DashboardModel from '../../models/model'
 import {requireModel} from "@symph/joy/controller";
 import {Input} from 'antd';
 const { TextArea } = Input;
 import controller from "@symph/joy/controller";
 import lodash from 'lodash'
-
 
 @requireModel(DashboardModel)          // register model
 @controller((state) => {              // state is store's state
@@ -24,8 +24,10 @@ export default class BraftEditorElement extends React.Component {
   };
 
   componentDidMount() {
-    console.log('component did mount');
+    // console.log('component did mount');
     this.props.onRef(this);
+    //组件库
+    this.braftFinder = this.editorInstance.getFinderInstance();
     let self = this;
     if (window && window.location.pathname.includes('edit')) {
 
@@ -73,18 +75,6 @@ export default class BraftEditorElement extends React.Component {
     lodash.debounce(() => {
       self.props.setValue(self.state.editorState.toHTML());
     }, 300, {'maxWait': 1000});
-    // lodash.throttle(() => {
-    //   console.log("set value");
-    //   self.props.setValue(self.state.editorState.toHTML());
-    // }, 5000);
-    // let convertToHTML = editorState.toHTML;
-    // if (typeof convertToHTML === 'function') {
-      // this.setState({
-      //   editorState,
-      //   rawHTML: editorState.toHTML(),
-      // });
-      // this.props.setValue(this.state.editorState.toHTML());
-    // }
   };
 
   preview = () => {
@@ -211,7 +201,7 @@ export default class BraftEditorElement extends React.Component {
     `
   };
 
-  saveCurrent = (e) => {
+  saveCurrent = () => {
     this.props.setValue(this.state.editorState.toHTML());
   };
 
@@ -225,6 +215,31 @@ export default class BraftEditorElement extends React.Component {
         rawHTML: e.currentTarget.value,
       })
   };
+
+  addMediaItem = () => {
+    // 使用braftFinder.addItems来添加媒体到媒体库
+    this.braftFinder.addItems([
+      {
+        id: new Date().getTime(),
+        type: 'IMAGE',
+        url: 'https://margox.cn/wp-content/uploads/2017/05/IMG_4995-480x267.jpg'
+      }
+    ])
+  };
+
+  insertMediaItem = () => {
+    // 使用ContentUtils.insertMedias来插入媒体到editorState
+    const editorState = ContentUtils.insertMedias(this.state.editorState, [
+      {
+        type: 'IMAGE',
+        url: 'https://margox.cn/wp-content/uploads/2017/05/IMG_4995-480x267.jpg'
+      }
+    ]);
+
+    // 更新插入媒体后的editorState
+    this.setState({ editorState })
+
+  }
 
   render() {
     const excludeControls = [
@@ -273,11 +288,24 @@ export default class BraftEditorElement extends React.Component {
             </div>
           ),
         }
+      },
+      'separator',
+      {
+        key: 'add-media',
+        type: 'button',
+        text: '插入图片到媒体库',
+        onClick: this.addMediaItem
+      }, {
+        key: 'insert-media',
+        type: 'button',
+        text: '插入图片到编辑器',
+        onClick: this.insertMediaItem
       }
     ];
     return (
       <div>
         <BraftEditorElem
+          ref={instance => this.editorInstance = instance}
           placeholder="write post here."
           excludeControls={excludeControls}
           extendControls={extendControls}
