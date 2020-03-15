@@ -1,17 +1,19 @@
 {
-  "name": "nekohand-blog-content-manage-system",
-  "version": "7.3.0",
-  "description": "Nekohand blog专用内容管理系统",
+  "name": "a-cms-for-nekohandblog",
+  "version": "7.3.5",
+  "description": "Nekohand blog专用CMS",
   "main": "index.js",
   "keywords": [
     "Nekohand",
+    "react",
+    "symphjoy",
     "Blog"
   ],
   "private": true,
   "scripts": {
     "dev": "joy dev",
     "build": "joy build",
-    "export": "yarn run build && joy export",
+    "export": "joy build && joy export",
     "start": "joy start"
   },
   "dependencies": {

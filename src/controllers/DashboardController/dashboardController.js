@@ -136,8 +136,8 @@ export default class DashboardController extends Component {
         <Head>
           <title>Dashboard</title>
         </Head>
-        <Header style={{ background: '#908', paddingBottom: '20px', margin: 0, marginBottom: '10px'}} >
-          <div style={{display: 'inline-block', color: 'pink', fontSize: '20px', marginLeft: '4%'}}>
+        <Header style={{ background: '#000', paddingBottom: '30px', margin: 0}} >
+          <div style={{display: 'inline-block', color: '#f2f2f2', fontSize: '20px', marginLeft: '4%'}}>
             <div>
               Nekohand Content Manage System (Beta)
             </div>
@@ -148,15 +148,14 @@ export default class DashboardController extends Component {
           <Sider width={160} style={{ background: '#fff', minHeight: '100vh', padding: '10px 0' }}>
             {generateMenu(arrayToTree(LeftMenu), this.props.dispatch)}
           </Sider>
-          <Layout style={{ padding: '0 24px 24px' }}>
-            <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
+          <Layout style={{ padding: '0 24px 24px', background: '#fff' }}>
+            <Content style={{ padding: 24, margin: 0, minHeight: 280 }}>
               {this.props.children}
             </Content>
           </Layout>
         </Layout>
-        <Footer style={{ background: 'transparent', width: '100%', padding: '20px 0' }}>
-          <FooterContent />
-        </Footer>
+
+        <FooterContent />
         <Modal title="确认页面"
                visible={this.state.visible}
                onOk={this.handleOk}

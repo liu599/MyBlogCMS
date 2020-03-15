@@ -4,16 +4,12 @@ import DashboardModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller'
 import config from '../../services/config'
 import {timeFormat} from '../../utils'
-import {Button, Card, Upload, Icon} from 'antd';
+import {Button, message, Card, Upload, Icon, Input} from 'antd';
 const { Meta } = Card;
 import Masonry from 'react-masonry-component';
 import {default as configs} from '../../services/config';
 
-const props = {
-  action: `${(configs.fileUrl)}/${configs.filemodules.upload}`,
-  listType: 'picture',
-  defaultFileList: [],
-};
+
 
 const masonryOptions = {
   transitionDuration: 300,
@@ -34,7 +30,20 @@ export default class ResourceList extends Component {
 
   state = {
     fileList: [],
+    relativePathName: '',
     uploading: false,
+  };
+
+  handleChange = (info) => {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+    this.setState({ fileList: [...info] });
   };
 
   componentDidMount() {
@@ -51,6 +60,17 @@ export default class ResourceList extends Component {
   }
 
   render() {
+    const props = {
+      action: `${(configs.fileUrl)}/${configs.filemodules.upload}`,
+      listType: 'picture',
+      data: {
+        name: "0000001.png",
+        email: "jkljkjadsfa.asdfa@qq.com",
+        relativePath: this.state.relativePathName,
+      },
+      onChange: this.handleChange,
+      defaultFileList: [],
+    };
     return (
       <>
         <Head>
@@ -58,10 +78,24 @@ export default class ResourceList extends Component {
         </Head>
         <h2 style={{ marginBottom: 20 }}>资源列表</h2>
         <div style={{ marginBottom: 20 }}>
-          <Upload {...props} supportServerRender multiple onRemove={() => {
-            this.props.dispatch({
-              type: 'model/filelist'
-            });
+          <Input defaultValue={"/"}
+                 onChange={(value) => {this.setState({
+                   relativePathName: value
+                 })}}
+                 placeholder="创建资源的相对路径" />
+        </div>
+        <div style={{ marginBottom: 20 }}>
+          <Upload {...props}
+                  fileList={this.state.fileList}
+                  supportServerRender
+                  multiple
+                  onRemove={() => {
+                  this.props.dispatch({
+                    type: 'model/filelistbytype',
+                    payload: {
+                      fileType: 'png'
+                    }
+                  });
           }}>
             <Button>
               <Icon type="upload" /> Upload
@@ -90,6 +124,7 @@ export default class ResourceList extends Component {
                         <Icon type="ellipsis" key="ellipsis" />,
                       ]}
                       cover={<img key={item.hashId}
+                                  alt="this file cannot be downloaded"
                                   data-src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileId}/`}
                                   src={`${config.fileUrl}/${config.filemodules.nekofile}/${item.fileId}/`} />
                       }
