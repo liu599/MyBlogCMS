@@ -41,29 +41,33 @@ class ResourceFix extends Component{
         this.btnStatus = false;
         return;
       }
-      if(!/(jpg|JPG|gif|GIF|mp3|MP3|jpeg|JPEG)$/.test(data.filetype)) {
+      if(!/(jpg|JPG|gif|GIF|mp3|MP3|jpeg|JPEG|flac|FLAC)$/.test(data.filetype)) {
         message.error('文件类型必须为jpg,JPG,jpeg,JPEG,mp3,MP3其中之一');
         this.btnStatus = false;
         return;
       }
       const hide = message.loading("正在修改中....");
+      data.token=window.localStorage.getItem("nekohand_token");
+      data.uid=window.localStorage.getItem("nekohand_administrator");
       let isSuccess = await dispatch({
         type: 'model/fixFiles',
         payload: data,
       });
       hide();
-      if (isSuccess !== null) {
-        notification.success({
-          duration: 1,
-          message: '修改成功',
-          description: '已成功加入数据库'
-        });
-      } else {
+      console.log(isSuccess);
+      if (!isSuccess) {
         notification.error({
           duration: 2,
           message: '登陆错误',
           description: `错误代码`
         });
+      } else {
+        notification.success({
+          duration: 1,
+          message: '修改成功',
+          description: '已成功加入数据库'
+        });
+
       }
     });
   };

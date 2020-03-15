@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7886a19-5d4c-4c2a-82e7-9a4205ea1ef1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/_document.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_error.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/background.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Article/ArticleEdit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Article/ArticleEdit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Article/ArticleList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Article/ArticleList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Article/BraftEditorElement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Article/BraftEditorElement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Resource/ResourceList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Resource/ResourceList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/constant.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/constant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/AppController/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/AppController/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/AppController/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/AppController/index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/DashboardController/dashboardController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/DashboardController/dashboardController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/IndexController/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/IndexController/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/article.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/article.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/cache.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/cache.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Resource/ResourceFix.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Resource/ResourceFix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,15 +95,15 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project\MyBlog\client\nhadmin\public" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Project\MyBlogCMS\src" />
       <recent name="D:\Project\MyBlogCMS\src\services" />
       <recent name="D:\Project\MyBlogCMS" />
       <recent name="D:\Project\MyBlog\client\nhadmin\dist" />
       <recent name="D:\Project\MyBlog\client\nhadmin" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Project\MyBlog\client\nhadmin\public" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -1181,7 +1166,11 @@
       <workItem from="1576338772294" duration="42000" />
       <workItem from="1578215431810" duration="10883000" />
       <workItem from="1578800171793" duration="23000" />
-      <workItem from="1579009007866" duration="9071000" />
+      <workItem from="1579009007866" duration="10628000" />
+      <workItem from="1582722309865" duration="608000" />
+      <workItem from="1583337440798" duration="618000" />
+      <workItem from="1584028990649" duration="1193000" />
+      <workItem from="1584295047979" duration="1132000" />
     </task>
     <servers />
   </component>
@@ -1203,14 +1192,11 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1578800192774">
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1584030742759">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1578800192774" />
-    <state x="740" y="324" key="RestClientTextRequest" timestamp="1575127894992">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="324" key="RestClientTextRequest/0.0.1920.1040@0.0.1920.1040" timestamp="1575127894992" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1584030742759" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1583341263835" />
   </component>
   <component name="masterDetails">
     <states>
