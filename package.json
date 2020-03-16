@@ -36,6 +36,7 @@
     "prismjs": "^1.15.0",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.5.2",
-    "react-masonry-component": "^6.2.1"
+    "react-masonry-component": "^6.2.1",
+    "umi-request": "^1.2.19"
   }
 }

@@ -24,11 +24,6 @@ export const LeftMenu = [{
   name: '用户列表',
   path: 'user-list',
 }, {
-  id: 11,
-  pid: 1,
-  name: '用户权限',
-  path: 'user-group',
-}, {
   id: 12,
   pid: 2,
   name: '文章列表',

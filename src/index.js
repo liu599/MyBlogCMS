@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from '@symph/joy/router'
 import AppController from './controllers/AppController'
 import ArticleComponents from './components/Article'
 import ResourceComponents from './components/Resource'
+import UserComponents from './components/User'
 
 // 加载业务组件
 import loading from './components/Loading'
@@ -25,6 +26,7 @@ export default class Main extends Component {
             <Switch>
               <DashboardController path="/dashboard">
                 <Switch>
+                  <Route exact path="/dashboard/user-list" component={UserComponents.UserList} />
                   <Route exact path="/dashboard/article-list" component={ArticleComponents.ArticleList} />
                   <Route exact path="/dashboard/article-list/create" component={ArticleComponents.ArticleEdit} />
                   <Route exact path="/dashboard/article-list/edit/:pid" component={ArticleComponents.ArticleEdit} />

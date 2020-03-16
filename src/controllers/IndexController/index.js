@@ -98,7 +98,7 @@ class IndexController extends Component {
                 Sign in
               </Button>
               <div className={styles.desc}>
-                <p>Version 7.3.0 Kasumi ©2017-2020 Tokei</p>
+                <p>Version 7.4.0 Kasumi ©2017-2020 Tokei</p>
               </div>
             </Row>
           </Form>

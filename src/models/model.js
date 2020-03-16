@@ -6,6 +6,7 @@ import { getFileList, getFileListByType, fix } from '../services/file';
 import lodash from 'lodash';
 import {message} from 'antd';
 import React from "react";
+import {getUsers} from "../services/users";
 
 @model()
 export default class AppModel {
@@ -30,6 +31,7 @@ export default class AppModel {
       status: 'public',
       body: '',
     },
+    userList: [],
   };
 
   async fetchServerStatus() {
@@ -108,6 +110,30 @@ export default class AppModel {
     return null;
   }
 
+  async loginNew({ payload }) {
+    let response = await login(payload);
+    // console.log('res', response, typeof response, response.message);
+    if (response && response.hasOwnProperty('api_token')) {
+      this.setState({
+        token: response.api_token,
+        user: response.user_id,
+      });
+      if (window) {
+        window.localStorage.setItem("nekohand_aimi_token", response.api_token);
+        window.localStorage.setItem("nekohand_aimi_administrator", response.user_id);
+      }
+      return true;
+    } else {
+      console.error(response.message);
+      this.setState({
+        error: {
+          msg: response.message,
+        }
+      })
+    }
+    return null;
+  }
+
   async fetchPostsList({ payload }) {
     let response = await postsFetch(payload);
     // let {posts} = this.getState();
@@ -173,6 +199,15 @@ export default class AppModel {
 
   async setAsyncState({payload}) {
     this.setState(payload);
+  }
+
+  async getUsers({payload}) {
+    let res = await getUsers(payload);
+    console.log(res, '2233');
+    this.setState({
+      userList: [res.data],
+    });
+    return null;
   }
 
 }

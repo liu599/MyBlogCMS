@@ -1,24 +1,16 @@
-import request from '../utils/request';
+import request, {extend} from 'umi-request';
 
-export async function getUsers() {
-  return request({
-    url: '/api/neko/v1/auth/users',
-    method: 'post',
-  });
-}
+const extendedRequest = extend({
+  requestType: "form",
+  method: "post",
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+  }
+});
 
-export async function getUser(data) {
-  return request({
-    url: '/api/neko/v1/auth/user',
-    method: 'post',
-    data,
-  });
-}
-
-export async function updateUser(data) {
-  return request({
-    url: '/api/neko/v1/auth/user',
-    method: 'put',
+export async function getUsers(data) {
+  return extendedRequest("https://mltd.ecs32.top/users.get", {
     data,
   });
 }
