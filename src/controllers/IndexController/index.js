@@ -4,6 +4,8 @@ import {routerRedux} from '@symph/joy/router';
 import DataModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
 import { Form, Icon, Input, Row, Button, notification, message } from 'antd';
+import getConfig from '@symph/joy/config';
+const {serverRuntimeConfig, publicRuntimeConfig} = getConfig();
 
 const FormItem = Form.Item;
 @requireModel(DataModel)
@@ -98,7 +100,7 @@ class IndexController extends Component {
                 Sign in
               </Button>
               <div className={styles.desc}>
-                <p>Version 7.4.0 Kasumi ©2017-2020 Tokei</p>
+                <p>Version {publicRuntimeConfig['NEKOHAND_CMS_VERSION']} Kasumi ©2017-2020 Tokei</p>
               </div>
             </Row>
           </Form>

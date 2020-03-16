@@ -6,6 +6,9 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   serverRender: false,
+  publicRuntimeConfig: {
+    NEKOHAND_CMS_VERSION: `${require("./package.json").version}`,
+  },
   assetPrefix: isProd ? 'https://tae.ecs32.top' : '',
   plugins: [
     withImageLoader({limit: 8192}),

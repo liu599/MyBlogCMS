@@ -24,12 +24,12 @@ export default class Main extends Component {
 
           <AppController>
             <Switch>
-              <DashboardController path="/dashboard">
+              <DashboardController path={"/dashboard"}>
                 <Switch>
                   <Route exact path="/dashboard/user-list" component={UserComponents.UserList} />
                   <Route exact path="/dashboard/article-list" component={ArticleComponents.ArticleList} />
                   <Route exact path="/dashboard/article-list/create" component={ArticleComponents.ArticleEdit} />
-                  <Route exact path="/dashboard/article-list/edit/:pid" component={ArticleComponents.ArticleEdit} />
+                  <Route exact path="/dashboard/article-list/edit/(:pid)" component={ArticleComponents.ArticleEdit} />
                   <Route exact path="/dashboard/article-category" component={ArticleComponents.ArticleCategory} />
                   <Route exact path="/dashboard/article-category/create" component={ArticleComponents.ArticleCategoryEdit} />
                   <Route path="/dashboard/article-category/edit/:cid" component={ArticleComponents.ArticleCategoryEdit} />
