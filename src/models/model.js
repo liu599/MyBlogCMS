@@ -205,7 +205,7 @@ export default class AppModel {
     let res = await getUsers(payload);
     console.log(res, '2233');
     this.setState({
-      userList: [res.data],
+      userList: res.data,
     });
     return null;
   }
