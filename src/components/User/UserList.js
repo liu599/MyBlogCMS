@@ -3,7 +3,8 @@ import Head from '@symph/joy/head';
 import DashboardModel from '../../models/model'
 import {Form, Input, Button, Checkbox, Icon, List, Table, Popconfirm} from 'antd';
 import controller, {requireModel} from "@symph/joy/controller";
-import {timeFormat} from '../../utils'
+import {timeFormat} from '../../utils';
+// import {EditableCell} from './EditableCell';
 
 const EditableContext = React.createContext();
 
@@ -15,6 +16,82 @@ const EditableRow = ({ form, index, ...props }) => (
 
 const EditableFormRow = Form.create()(EditableRow);
 
+class EditableCell extends React.Component {
+  state = {
+    editing: false,
+  };
+
+  toggleEdit = () => {
+    const editing = !this.state.editing;
+    this.setState({ editing }, () => {
+      if (editing) {
+        this.input.focus();
+      }
+    });
+  };
+
+  save = e => {
+    console.log("save?");
+    const { record, handleSave } = this.props;
+    console.log(record);
+    this.form.validateFields((error, values) => {
+      if (error && error[e.currentTarget.id]) {
+        return;
+      }
+      this.toggleEdit();
+      handleSave({ ...record, ...values });
+    });
+  };
+
+  renderCell = form => {
+    this.form = form;
+    const { children, dataIndex, record, title } = this.props;
+    const { editing } = this.state;
+    return editing ? (
+      <Form.Item style={{ margin: 0 }}>
+        {form.getFieldDecorator(dataIndex, {
+          rules: [
+            {
+              required: true,
+              message: `${title} is required.`,
+            },
+          ],
+          initialValue: record[dataIndex],
+        })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />)}
+      </Form.Item>
+    ) : (
+      <div
+        className="editable-cell-value-wrap"
+        style={{ paddingRight: 24 }}
+        onClick={this.toggleEdit}
+      >
+        {children}
+      </div>
+    );
+  };
+
+  render() {
+    const {
+      editable,
+      dataIndex,
+      title,
+      record,
+      index,
+      handleSave,
+      children,
+      ...restProps
+    } = this.props;
+    return (
+      <td {...restProps}>
+        {editable ? (
+          <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>
+        ) : (
+          children
+        )}
+      </td>
+    );
+  }
+}
 
 
 @requireModel(DashboardModel)
@@ -30,6 +107,10 @@ class UserList extends Component {
     console.log(record);
   };
 
+  handleRegistor = record => {
+    console.log(record);
+  }
+
   columns = [
     {
       title: "序列",
@@ -40,9 +121,10 @@ class UserList extends Component {
       title: "用户名",
       dataIndex: "name",
       width: 120,
+      editable: true,
     },
     {
-      title: "识别代码",
+      title: "用户ID",
       dataIndex: "userid",
       width: 220,
     },
@@ -50,6 +132,7 @@ class UserList extends Component {
       title: "注册邮箱",
       dataIndex: "mail",
       width: 260,
+      editable: true,
     },
     {
       title: "注册时间",
@@ -71,18 +154,18 @@ class UserList extends Component {
       key: 'x',
       width: 200,
       render: (text, record) => {
-        if (record.key === "new") {
+        if (record.ky === "new") {
           return (
             <div>
               <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)} style={{ marginRight: 16 }} >
                 <Button type={"danger"} style={{ marginRight: 16 }}>Delete</Button>
               </Popconfirm>
-              <Popconfirm title="Save" onConfirm={() => this.handleSave(record.key)}>
+              <Popconfirm title="Save" onConfirm={() => this.handleRegistor(record)}>
                 <Button type={"primary"}>Save</Button>
               </Popconfirm>
             </div>
           )} else {
-            return this.props.model.userList.length >= 1 && record.uid !== 1 ? (
+            return this.props.model.userList.length >= 1 && record.uid !== 1 && record.uid !== 2 ? (
               <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
                 <Button type={"danger"}>Delete</Button>
               </Popconfirm>
@@ -91,10 +174,6 @@ class UserList extends Component {
         }
     },
   ];
-
-  handleSave = (record) => {
-    console.log(record);
-  };
 
   componentDidMount() {
     this.props.dispatch({
@@ -114,13 +193,13 @@ class UserList extends Component {
   handleAdd = (record) => {
     const { dataSource } = this.state;
     const newData = {
-      key: "new",
+      ky: "new",
       uid: this.state.dataSource.length + 1,
       name: "adfadfasdf",
-      userid: "待定",
+      userid: `待定${new Date().getTime()}`,
       mail: "b@b",
-      createdAt: new Date().getTime()*0.001,
-      loggedAt: new Date().getTime()*0.001,
+      createdAt: Math.floor(new Date().getTime()*0.001),
+      loggedAt: Math.floor(new Date().getTime()*0.001),
     };
     this.setState({
       dataSource: [...dataSource, newData]
@@ -148,11 +227,44 @@ class UserList extends Component {
     this.setState({ rowSelection: enable ? {} : undefined });
   };
 
+  handleSave = row => {
+    const newData = [...this.state.dataSource];
+    const index = newData.findIndex(item => row.userid === item.userid);
+    console.log(index);
+    const item = newData[index];
+    newData.splice(index, 1, {
+      ...item,
+      ...row,
+    });
+    console.log(newData, 777);
+    this.setState({ dataSource: newData });
+  };
 
   render() {
     const { dataSource, rowSelection } = this.state;
     console.log(this.props.model, "222");
     const {form: {getFieldDecorator}} = this.props;
+    const components = {
+      body: {
+        row: EditableFormRow,
+        cell: EditableCell,
+      }
+    };
+    const columns = this.columns.map(col => {
+      if (!col.editable) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: record => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          handleSave: this.handleSave,
+        }),
+      };
+    });
     return (
       <React.Fragment>
         <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, marginRight: 16 }}>
@@ -162,13 +274,15 @@ class UserList extends Component {
           修改密码
         </Button>
         {dataSource.length > 0 ?
-          <Table bordered={true}
+          <Table bordered
+                 components={components}
                  pagination={{ pageSize: 50 }}
-                 scroll={{ y: 240 }}
-                 rowSelection={this.handleRowSelectionChange}
+                 scroll={{ y: 720 }}
+                 rowSelection={{}}
+                 rowClassName={() => 'editable-row'}
                  rowKey={record => record.userid}
                  dataSource={dataSource}
-                 columns={this.columns} /> : null }
+                 columns={columns} /> : null }
       </React.Fragment>
 
     )
