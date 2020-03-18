@@ -6,14 +6,14 @@ import { getFileList, getFileListByType, fix } from '../services/file';
 import lodash from 'lodash';
 import {message} from 'antd';
 import React from "react";
-import {getUsers} from "../services/users";
+import {getUsers, createUser} from "../services/users";
 
 @model()
 export default class AppModel {
   namespace = 'model';
   // 初始化数据
   initState = {
-    list: {},
+    code: {},
     posts: [],
     token: '',
     user: '',
@@ -36,13 +36,10 @@ export default class AppModel {
 
   async fetchServerStatus() {
     let response = await getServerInfo();
-    let list = {
-      res: response.data
-    };
     this.setState({
-      list,
+      code: response.data.body
     });
-    return null;
+    return Promise.resolve(response.data.body);
   }
 
   async filelist({ payload }) {
@@ -119,8 +116,8 @@ export default class AppModel {
         user: response.user_id,
       });
       if (window) {
-        window.localStorage.setItem("nekohand_aimi_token", response.api_token);
-        window.localStorage.setItem("nekohand_aimi_administrator", response.user_id);
+        window.localStorage.setItem("nekohand_token", response.api_token);
+        window.localStorage.setItem("nekohand_administrator", response.user_id);
       }
       return true;
     } else {
@@ -210,4 +207,11 @@ export default class AppModel {
     return null;
   }
 
+  async createUser({payload}) {
+    payload.token = window.localStorage.getItem("nekohand_token");
+    payload.uid = window.localStorage.getItem("nekohand_administrator");
+    let res = await createUser(payload);
+    console.log(res, 'createUser');
+    return null;
+  }
 }

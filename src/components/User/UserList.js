@@ -3,6 +3,7 @@ import Head from '@symph/joy/head';
 import DashboardModel from '../../models/model'
 import {Form, Input, Button, Checkbox, Icon, List, Table, Popconfirm} from 'antd';
 import controller, {requireModel} from "@symph/joy/controller";
+import autowire from '@symph/joy/autowire';
 import {timeFormat} from '../../utils';
 // import {EditableCell} from './EditableCell';
 
@@ -99,6 +100,9 @@ class EditableCell extends React.Component {
 
 class UserList extends Component {
 
+  @autowire()
+  aimiModel: DashboardModel;
+
   state = {
     dataSource: [],
   };
@@ -108,8 +112,18 @@ class UserList extends Component {
   };
 
   handleRegistor = record => {
-    console.log(record);
-  }
+    console.log(record, 'record');
+    this.aimiModel.fetchServerStatus().then((password) => {
+      this.aimiModel.createUser({
+        payload: {
+          username: record.name,
+          password: password,
+          email: record.mail,
+        }
+      });
+      console.log("pwd", password);
+    });
+  };
 
   columns = [
     {
@@ -157,10 +171,10 @@ class UserList extends Component {
         if (record.ky === "new") {
           return (
             <div>
-              <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)} style={{ marginRight: 16 }} >
+              <Popconfirm title="确认删除数据？" onConfirm={() => this.handleDelete(record.key)} style={{ marginRight: 16 }} >
                 <Button type={"danger"} style={{ marginRight: 16 }}>Delete</Button>
               </Popconfirm>
-              <Popconfirm title="Save" onConfirm={() => this.handleRegistor(record)}>
+              <Popconfirm title="确认创建？" onConfirm={() => this.handleRegistor(record)}>
                 <Button type={"primary"}>Save</Button>
               </Popconfirm>
             </div>
@@ -197,7 +211,7 @@ class UserList extends Component {
       uid: this.state.dataSource.length + 1,
       name: "adfadfasdf",
       userid: `待定${new Date().getTime()}`,
-      mail: "b@b",
+      mail: "114514@1919.com",
       createdAt: Math.floor(new Date().getTime()*0.001),
       loggedAt: Math.floor(new Date().getTime()*0.001),
     };

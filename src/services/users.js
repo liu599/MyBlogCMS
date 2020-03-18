@@ -14,3 +14,9 @@ export async function getUsers(data) {
     data,
   });
 }
+
+export async function createUser(data) {
+  return extendedRequest("https://mltd.ecs32.top/user.create", {
+    data,
+  });
+}
