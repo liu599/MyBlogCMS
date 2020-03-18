@@ -19,6 +19,10 @@ export const LeftMenu = [{
   name: '通用工具',
   icon: 'tool',
 }, {
+  id: 6,
+  name: '爱美UFC运营',
+  icon: 'tool',
+}, {
   id: 10,
   pid: 1,
   name: '用户列表',
@@ -35,14 +39,14 @@ export const LeftMenu = [{
   path: 'article-category',
 }, {
   id: 14,
-  pid: 2,
+  pid: 6,
   name: '标签管理',
-  path: 'article-tags',
+  path: 'aimi-tags',
 }, {
   id: 15,
-  pid: 2,
-  name: '文章模板',
-  path: 'article-template',
+  pid: 6,
+  name: '文件管理',
+  path: 'aimi-pictures',
 }, {
   id: 16,
   pid: 3,

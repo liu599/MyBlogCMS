@@ -5,6 +5,7 @@ import {Form, Input, Button, Checkbox, Icon, List, Table, Popconfirm} from 'antd
 import controller, {requireModel} from "@symph/joy/controller";
 import autowire from '@symph/joy/autowire';
 import {timeFormat} from '../../utils';
+import styles from './UserList.less';
 // import {EditableCell} from './EditableCell';
 
 const EditableContext = React.createContext();
@@ -62,7 +63,7 @@ class EditableCell extends React.Component {
       </Form.Item>
     ) : (
       <div
-        className="editable-cell-value-wrap"
+        className={styles.wrapper}
         style={{ paddingRight: 24 }}
         onClick={this.toggleEdit}
       >
@@ -94,14 +95,13 @@ class EditableCell extends React.Component {
   }
 }
 
-
-@requireModel(DashboardModel)
+// @requireModel(DashboardModel)
 @controller(state => ({model: state.model}))
 
 class UserList extends Component {
 
   @autowire()
-  aimiModel: DashboardModel;
+  aimiModel:  DashboardModel;
 
   state = {
     dataSource: [],
@@ -256,7 +256,6 @@ class UserList extends Component {
 
   render() {
     const { dataSource, rowSelection } = this.state;
-    console.log(this.props.model, "222");
     const {form: {getFieldDecorator}} = this.props;
     const components = {
       body: {
