@@ -90,7 +90,7 @@ class ResourceFix extends Component{
         });
         return;
       }
-      if(!/(jpg|JPG|gif|GIF|mp3|MP3|jpeg|JPEG)$/.test(data.filetype)) {
+      if(!/(jpg|JPG|gif|GIF|mp3|MP3|jpeg|JPEG|flac|FLAC)$/.test(data.filetype)) {
         message.error('文件类型必须为jpg,JPG,jpeg,JPEG,mp3,MP3其中之一');
         this.setState({
           btnStatus: false

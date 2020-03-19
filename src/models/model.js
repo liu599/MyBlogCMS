@@ -1,5 +1,11 @@
 import model from '@symph/joy/model';
-import {getServerInfo, postsFetch, postFetch, postCreation, postDelete} from '../services/article';
+import {
+  getServerInfo,
+  postsFetch,
+  postFetch,
+  postCreation,
+  postDelete}
+from '../services/article';
 import * as categoryServices from '../services/categories';
 import { login } from '../services/login';
 import { getFileList, getFileListByType, fix } from '../services/file';

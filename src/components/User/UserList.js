@@ -1,7 +1,16 @@
 import React, {Component} from 'react';
 import Head from '@symph/joy/head';
 import DashboardModel from '../../models/model'
-import {Form, Input, Button, Checkbox, Icon, List, Table, Popconfirm} from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Icon,
+  List,
+  Table,
+  Popconfirm
+} from 'antd';
 import controller, {requireModel} from "@symph/joy/controller";
 import autowire from '@symph/joy/autowire';
 import {timeFormat} from '../../utils';

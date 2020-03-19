@@ -8,6 +8,8 @@ import ArticleComponents from './components/Article'
 import ResourceComponents from './components/Resource'
 import UserComponents from './components/User'
 
+import AimiTags from './pages/AimiTags/AimiTags'
+
 // 加载业务组件
 import loading from './components/Loading'
 
@@ -36,6 +38,10 @@ export default class Main extends Component {
                   <Route exact path="/dashboard/resource-upload" component={ResourceComponents.ResourceUpload} />
                   <Route exact path="/dashboard/resource-tools" component={ResourceComponents.ResourceFix} />
                   <Route exact path="/dashboard/resource-list" component={ResourceComponents.ResourceFileList} />
+
+                  <Route exact path="/dashboard/aimi-tags"  component={AimiTags} />
+
+
                   <Route component={() => (<div>Waiting for the development..</div>)}/>
                 </Switch>
               </DashboardController>
