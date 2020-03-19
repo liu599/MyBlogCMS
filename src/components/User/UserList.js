@@ -175,7 +175,6 @@ class UserList extends Component {
       title: '操作',
       dataIndex: '',
       key: 'x',
-      width: 200,
       render: (text, record) => {
         if (record.ky === "new") {
           return (

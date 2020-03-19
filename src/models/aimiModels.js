@@ -1,5 +1,5 @@
 import model from '@symph/joy/model';
-import {getAimiTags} from "../services/aimiTags";
+import {getAimiTags, updateAimiTags} from "../services/aimiTags";
 
 @model()
 export default class AimiModel {
@@ -15,4 +15,14 @@ export default class AimiModel {
       return Promise.resolve(res.data);
     }
   }
+
+  async updateAimiTag({payload}) {
+    let res = await updateAimiTags(payload);
+    if (res && res.success) {
+      console.log(res, "adsjfasdf");
+      return Promise.resolve(res);
+    }
+  }
+
+
 }
