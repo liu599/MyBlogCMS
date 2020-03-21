@@ -135,12 +135,12 @@ class AimiTags extends Component {
   render() {
     const formItemLayout = {
       labelCol: {
-        xs: { span: 4 },
-        sm: { span: 8 },
+        xs: { span: 2 },
+        sm: { span: 4 },
       },
       wrapperCol: {
-        xs: { span: 20 },
-        sm: { span: 16 },
+        xs: { span: 22 },
+        sm: { span: 20 },
       },
     };
     const tailFormItemLayout = {

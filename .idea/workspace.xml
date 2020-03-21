@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7886a19-5d4c-4c2a-82e7-9a4205ea1ef1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_document.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_document.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/User/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User/UserList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/aimiModels.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/aimiModels.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/AimiTags/AimiTags.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AimiTags/AimiTags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/aimiTags.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/aimiTags.js" afterDir="false" />
-    </list>
+    <list default="true" id="e7886a19-5d4c-4c2a-82e7-9a4205ea1ef1" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
