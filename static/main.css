@@ -1,0 +1,9 @@
+.ant-pagination-item-active {
+  background: #1890ff !important;
+}
+.ant-transfer-list {
+  width: 260px !important;
+}
+.ant-pagination-item-active a {
+  color: #f4f4f4 !important;
+}

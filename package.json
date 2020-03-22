@@ -1,6 +1,6 @@
 {
   "name": "a-cms-for-nekohandblog",
-  "version": "7.4.0",
+  "version": "7.5.0",
   "description": "Nekohand blog专用CMS",
   "main": "index.js",
   "keywords": [
@@ -29,6 +29,7 @@
     "draft-js-prism": "^1.0.6",
     "express": "^4.17.1",
     "good-storage": "^1.0.1",
+    "immer": "^6.0.2",
     "jsonp": "^0.2.1",
     "less": "^3.8.1",
     "lodash": "^4.17.11",

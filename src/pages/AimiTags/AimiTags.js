@@ -205,7 +205,7 @@ class AimiTags extends Component {
                     </Tooltip>
                   }/>)}</FormItem>
               <FormItem
-                label="标签名称: "
+                label="标签链接: "
                 hasFeedback
                 className="fix-form" >
                 {getFieldDecorator('taglink', {

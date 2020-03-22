@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7886a19-5d4c-4c2a-82e7-9a4205ea1ef1" name="Default" comment="" />
+    <list default="true" id="e7886a19-5d4c-4c2a-82e7-9a4205ea1ef1" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/AimiPictures/AimiPictures.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/AimiPictures/AimiPictures.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_document.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_document.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/aimiModels.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/aimiModels.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/AimiTags/AimiTags.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AimiTags/AimiTags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/aimiTags.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/aimiTags.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,17 +38,11 @@
         <option value="HTML File" />
         <option value="JSX" />
         <option value="stylus" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
     <option name="SCHEME" value="Project" />
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>hash</find>
-      <find>222</find>
-    </findStrings>
   </component>
   <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
@@ -77,8 +82,8 @@
     <property name="editor.config.ad.shown" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="javascript.nodejs.core.library.configured.version" value="9.11.1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="javascript.nodejs.core.library.configured.version" value="12.13.0" />
+    <property name="last_opened_file_path" value="G:/代码/MyBlogServer" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.jscs" value="true" />
@@ -1264,6 +1269,8 @@
       <workItem from="1584073258964" duration="2333000" />
       <workItem from="1584333712738" duration="2366000" />
       <workItem from="1584504619399" duration="2737000" />
+      <workItem from="1584803848981" duration="1875000" />
+      <workItem from="1584880833084" duration="15448000" />
     </task>
     <servers />
   </component>
@@ -1285,14 +1292,11 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1578800192774">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="2660" y="274" key="FileChooserDialogImpl" timestamp="1584809831965">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="2660" y="274" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1584809831965" />
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1578800192774" />
-    <state x="740" y="324" key="RestClientTextRequest" timestamp="1575127894992">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="324" key="RestClientTextRequest/0.0.1920.1040@0.0.1920.1040" timestamp="1575127894992" />
   </component>
   <component name="masterDetails">
     <states>

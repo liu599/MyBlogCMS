@@ -20,6 +20,7 @@ export default class MyDocument extends Document {
           <meta property="og:site_name" content="Nekohand"/>
           <meta property="og:description"
                 content="アニメ、ゲーム、コミック、声優によるリアルライブなど様々なメディアミックスを展開する次世代ガールズバンドプロジェクトBanG Dream!（バンドリ！）"/>
+          <link rel="stylesheet" href="/static/main.css" />
         </Head>
         <body>
         <Main/>

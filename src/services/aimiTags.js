@@ -21,3 +21,30 @@ export async function updateAimiTags(data) {
     data
   })
 }
+
+export async function fetchAimiPicturesByTag(data) {
+  return extendedRequest("https://mltd.ecs32.top/tag.filelist", {
+    data
+  })
+}
+
+export async function fetchTagforAimiPictures(data) {
+  return extendedRequest("https://mltd.ecs32.top/filelist.tag", {
+    data
+  })
+}
+
+export async function updateAimiPictures(data) {
+  return umirequest("https://mltd.ecs32.top/tagfiles.update", {
+    method: "POST",
+    data,
+  })
+}
+
+
+// FIXME: MIX UPLAOD
+export async function uploadAimiPictures(data) {
+  return extendedRequest("https://mltd.ecs32.top/tagfile.upload", {
+    data
+  })
+}
