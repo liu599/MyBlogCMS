@@ -61,6 +61,8 @@ class AimiPictures extends Component {
       ModalText: 'The modal will be closed after two seconds',
       confirmLoading: true,
     });
+
+    console.log(this.state.targetKeys, "ready to submit");
     setTimeout(() => {
       this.setState({
         visible: false,
