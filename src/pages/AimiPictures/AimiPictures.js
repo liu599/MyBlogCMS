@@ -24,8 +24,6 @@ import {
 } from 'antd';
 const FormItem = Form.Item;
 
-import produce from "immer";
-
 @controller(state => ({aimiModel: state.aimiModel}))
 class AimiPictures extends Component {
 
@@ -39,7 +37,12 @@ class AimiPictures extends Component {
     disabled: false,
     currentEditData: {},
     dataSource: [],
-    pagination: {},
+    pagination: {
+      defaultPageSize: 20,
+      size: "medium",
+      showQuickJumper: true,
+      pageSize: 20,
+    },
     btnStatus: true,
     loading: false,
     ModalText: '标签列表',
@@ -58,11 +61,34 @@ class AimiPictures extends Component {
       })
     },
     onSubmit: () => {
-      let {rowSelectionData, rowSelectionTags} = this.state;
+      let {rowSelectionData, rowSelectionTags, pagination} = this.state;
       let submitData = produce(rowSelectionData, draft => {
         draft.forEach(item => item.Tags = rowSelectionTags);
       });
       console.log(submitData, "JJJ");
+      this.aimi.updateAimiPictureTags({
+        payload: submitData,
+      }).then((success) => {
+        if (success) {
+          message.success("修改成功");
+          setTimeout(() => {
+            this.fetchData({
+              tagid: "5e50152d58adfe5f36e095f5",
+              pagenum: pagination.current,
+              pagesize: 20,
+            });
+            this.setState({
+              visible: false,
+              confirmLoading: false,
+              rowSelection: undefined,
+              rowSelectionData: [],
+              rowSelectionTags: [],
+            });
+          }, 2000);
+        } else {
+          message.warning("Error!")
+        }
+      });
     }
   };
 
@@ -168,12 +194,11 @@ class AimiPictures extends Component {
         pagesize,
       }
     }).then((res) => {
-      console.log(res.pager, "pager");
+      console.log(res.pager, this.props.aimiModel.pager, "pager");
       this.setState({
         dataSource: res.data,
         pagination: {
           ...this.props.aimiModel.pager,
-          pageSize: parseInt(res.pager.pageSize, 10),
           total: parseInt(res.pager.total, 10),
           current: parseInt(pagenum, 10),
         },
@@ -270,6 +295,7 @@ class AimiPictures extends Component {
 
   handleTableChange = (pagination, filters, sorter) => {
     const pager = { ...this.state.pagination };
+    console.log(pagination, "adsfas");
     pager.current = pagination.current;
     this.setState({
       pagination: pager,
