@@ -9,7 +9,7 @@ module.exports = {
   publicRuntimeConfig: {
     NEKOHAND_CMS_VERSION: `${require("./package.json").version}`,
   },
-  assetPrefix: isProd ? 'https://tae.ecs32.top' : '',
+  assetPrefix: isProd ? 'https://ayasa.ecs32.top' : '',
   plugins: [
     withImageLoader({limit: 8192}),
     // 处理应用内组件的less样式

@@ -55,8 +55,8 @@ class AimiTags extends Component {
         this.btnStatus = false;
         return null;
       }
-      if (!/^[A-Za-z_]+$/.exec(data.taglink)) {
-        message.error('标签链接只能为英文和下划线');
+      if (!/^[A-Za-z_0-9]+$/.exec(data.taglink)) {
+        message.error('标签链接只能为英文数字或者下划线');
         this.btnStatus = false;
         return null;
       }
@@ -66,6 +66,7 @@ class AimiTags extends Component {
       if (p0 && p0.success) {
         message.success("添加成功");
         this.fetchData();
+        this.props.form.resetFields();
       } else {
         if (p0.error) {
           message.warning(p0.error.code);
@@ -121,9 +122,9 @@ class AimiTags extends Component {
           return (
             <div>
               <Popconfirm title="确认删除数据？" onConfirm={() => this.handleDelete(record.key)} style={{ marginRight: 16 }} >
-                <Button type={"danger"} style={{ marginRight: 16 }}>删除</Button>
+                <Button disabled type={"danger"} style={{ marginRight: 16 }}>删除</Button>
               </Popconfirm>
-              <Button type={"primary"}>编辑</Button>
+              <Button disabled type={"primary"}>编辑</Button>
             </div>
           )} else {
           return (<b>默认标签, 无法更改</b>);

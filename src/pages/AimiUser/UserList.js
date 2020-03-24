@@ -15,7 +15,6 @@ import controller, {requireModel} from "@symph/joy/controller";
 import autowire from '@symph/joy/autowire';
 import {timeFormat} from '../../utils';
 import styles from './UserList.less';
-// import {EditableCell} from './EditableCell';
 
 const EditableContext = React.createContext();
 
@@ -114,14 +113,20 @@ class UserList extends Component {
 
   state = {
     dataSource: [],
+    newPwd: "?",
+    newUser: "?",
+    loading: false,
   };
 
   handleDelete = (record) => {
     console.log(record);
   };
 
-  handleRegistor = record => {
+  handleRegister = record => {
     console.log(record, 'record');
+    this.setState({
+      loading: true,
+    });
     this.aimiModel.fetchServerStatus().then((password) => {
       this.aimiModel.createUser({
         payload: {
@@ -130,7 +135,11 @@ class UserList extends Component {
           email: record.mail,
         }
       });
-      console.log("pwd", password);
+      this.setState({
+        newPwd: password,
+        newUser: record.name,
+        loading: false,
+      });
     });
   };
 
@@ -182,7 +191,7 @@ class UserList extends Component {
               <Popconfirm title="确认删除数据？" onConfirm={() => this.handleDelete(record.key)} style={{ marginRight: 16 }} >
                 <Button type={"danger"} style={{ marginRight: 16 }}>Delete</Button>
               </Popconfirm>
-              <Popconfirm title="确认创建？" onConfirm={() => this.handleRegistor(record)}>
+              <Popconfirm title="确认创建？" onConfirm={() => this.handleRegister(record)}>
                 <Button type={"primary"}>Save</Button>
               </Popconfirm>
             </div>
@@ -237,7 +246,7 @@ class UserList extends Component {
       if (!err) {
         console.log('Received values of form: ', values);
         await dispatch({
-          type: 'model/loginNew',
+          type: 'model/login',
           payload: values,
         });
 
@@ -263,7 +272,7 @@ class UserList extends Component {
   };
 
   render() {
-    const { dataSource, rowSelection } = this.state;
+    const { dataSource, rowSelection, newPwd, newUser } = this.state;
     const {form: {getFieldDecorator}} = this.props;
     const components = {
       body: {
@@ -288,10 +297,10 @@ class UserList extends Component {
     });
     return (
       <React.Fragment>
-        <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, marginRight: 16 }}>
+        <Button disabled onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, marginRight: 16 }}>
           注册用户
         </Button>
-        <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, marginRight: 16 }}>
+        <Button disabled onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, marginRight: 16 }}>
           修改密码
         </Button>
         {dataSource.length > 0 ?
@@ -304,6 +313,11 @@ class UserList extends Component {
                  rowKey={record => record.userid}
                  dataSource={dataSource}
                  columns={columns} /> : null }
+        <div style={{marginTop: 16}}>
+          <h2>PASSWORD CLIPBOARD</h2>
+          <p>账号: {newUser}</p>
+          <p>密码: {newPwd}</p>
+        </div>
       </React.Fragment>
 
     )

@@ -19,6 +19,14 @@ export default class AimiModel {
     pager: {},
   };
 
+  async updateAimiPictureTags({payload}) {
+    let res = await updateAimiPictures(payload);
+    if (res && res.success) {
+      return Promise.resolve(true);
+    }
+    return Promise.resolve(false);
+  }
+
   async fetchAimiTags() {
     let res = await getAimiTags();
     if (res && res.data) {

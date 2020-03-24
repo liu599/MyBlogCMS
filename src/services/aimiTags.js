@@ -37,6 +37,10 @@ export async function fetchTagforAimiPictures(data) {
 export async function updateAimiPictures(data) {
   return umirequest("https://mltd.ecs32.top/tagfiles.update", {
     method: "POST",
+    headers: {
+      Token: window && window.localStorage.getItem("nekohand_token"),
+      User: window && window.localStorage.getItem("nekohand_administrator")
+    },
     data,
   })
 }
