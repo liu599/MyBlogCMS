@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from '@symph/joy/router'
 import AppController from './controllers/AppController'
 import ArticleComponents from './components/Article'
 import ResourceComponents from './components/Resource'
-import UserComponents from './components/User'
+import UserComponents from './pages/User'
 
 import AimiTags from './pages/AimiTags/AimiTags'
 
