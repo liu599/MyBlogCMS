@@ -91,7 +91,7 @@ export default class AppModel {
 
   async login({ payload }) {
     let response = await login(payload);
-    // console.log('res', response, typeof response, response.message);
+    console.log(response);
     if (response && response.hasOwnProperty('api_token')) {
       this.setState({
         token: response.api_token,
@@ -102,39 +102,41 @@ export default class AppModel {
         window.localStorage.setItem("nekohand_administrator", response.user_id);
       }
       return true;
-    } else {
-      console.error(response.message);
+    } else if (response && response.hasOwnProperty('token')) {
       this.setState({
-        error: {
-          msg: response.message,
-        }
-      })
-    }
-    return null;
-  }
-
-  async loginNew({ payload }) {
-    let response = await login(payload);
-    // console.log('res', response, typeof response, response.message);
-    if (response && response.hasOwnProperty('api_token')) {
-      this.setState({
-        token: response.api_token,
-        user: response.user_id,
+        token: response.token,
+        user: response.uid,
       });
       if (window) {
-        window.localStorage.setItem("nekohand_token", response.api_token);
-        window.localStorage.setItem("nekohand_administrator", response.user_id);
+        window.localStorage.setItem("nekohand_token", response.token);
+        window.localStorage.setItem("nekohand_administrator", response.uid);
       }
       return true;
     } else {
-      console.error(response.message);
-      this.setState({
-        error: {
-          msg: response.message,
-        }
-      })
+      if (response && response.hasOwnProperty("message")) {
+        console.error(response.message);
+        this.setState({
+          error: {
+            msg: response.message,
+          }
+        });
+        return Promise.resolve(false);
+      }
+      try {
+        let res = await response.json();
+        console.log(res);
+        this.setState({
+          error: {
+            msg: `{"message": "${res.error.message}", "statusCode": "${res.error.code}"}`,
+          }
+        });
+        return Promise.resolve(false);
+      }
+      catch (err) {
+        console.error(err)
+      }
     }
-    return null;
+    return false;
   }
 
   async fetchPostsList({ payload }) {

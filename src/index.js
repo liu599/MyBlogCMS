@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from '@symph/joy/router'
 import AppController from './controllers/AppController'
 import ArticleComponents from './components/Article'
 import ResourceComponents from './components/Resource'
-import UserComponents from './pages/User'
+import UserComponents from './pages/AimiUser'
 
 import AimiTags from './pages/AimiTags/AimiTags'
 
@@ -27,7 +27,7 @@ export default class Main extends Component {
 
           <AppController>
             <Switch>
-              <DashboardController path={"/dashboard"}>
+              <DashboardController path="/dashboard">
                 <Switch>
                   <Route exact path="/dashboard/user-list" component={UserComponents.UserList} />
                   <Route exact path="/dashboard/article-list" component={ArticleComponents.ArticleList} />
@@ -43,7 +43,7 @@ export default class Main extends Component {
                   <Route exact path="/dashboard/aimi-tags"  component={AimiTags} />
                   <Route exact path="/dashboard/aimi-pictures" component={AimiPictures} />
 
-                  <Route component={() => (<div>Waiting for the development..</div>)}/>
+                  <Route component={() => (<p>系统不开放</p>)}/>
                 </Switch>
               </DashboardController>
               <Route path="/" component={IndexController}/>

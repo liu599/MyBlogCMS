@@ -16,8 +16,22 @@ export default class AimiModel {
   initState = {
     tags: [],
     files: [],
-    pager: {},
+    pager: {
+      defaultCurrent: 1,
+      defaultPageSize: 20,
+      pageSize: 20,
+      size: "medium",
+      showQuickJumper: true,
+    },
   };
+
+  async updateAimiPictureTags({payload}) {
+    let res = await updateAimiPictures(payload);
+    if (res && res.success) {
+      return Promise.resolve(true);
+    }
+    return Promise.resolve(false);
+  }
 
   async fetchAimiTags() {
     let res = await getAimiTags();
@@ -28,7 +42,7 @@ export default class AimiModel {
           df.disabled = ind === 0;
         });
       });
-      console.log(tags, "after produce")
+      // console.log(tags, "after produce")
       this.setState({
         tags,
       });
@@ -46,15 +60,17 @@ export default class AimiModel {
 
   async fetchAimiPictures({payload}) {
     let res = await fetchAimiPicturesByTag(payload);
+    let currentState = await this.getState();
     if (res && res.success) {
       console.log(res, "030");
       this.setState({
         files: res.data,
         pager: {
           defaultCurrent: 1,
+          defaultPageSize: 20,
           size: "medium",
           showQuickJumper: true,
-          pageSize: parseInt(res.pager.pageSize, 10),
+          pageSize: 20,
           total: parseInt(res.pager.total, 10),
           current: parseInt(payload.pagenum, 10),
         },

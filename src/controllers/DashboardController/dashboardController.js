@@ -22,7 +22,7 @@ const onSelectModule = (dispatch) => {
 
 const generateMenu = (menuTree, dispatch) => {
   const mode = 'inline';
-  const defaultSelectedKey = [`nh-${String(menuTree[1].children[0].id)}`];
+  const defaultSelectedKey = [`nh-${String(menuTree[5].children[0].id)}`];
   const defaultOpenKeys = menuTree.map((menuItem) => {
     return `nh-${menuItem.id}`;
   });

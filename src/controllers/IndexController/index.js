@@ -23,18 +23,18 @@ class IndexController extends Component {
         this.btnStatus = false;
         return;
       }
-      if(/^[a-z0-9A-Z]+$/.test(data.password)) {
-        message.error('密码必须包含特殊字符');
-        this.btnStatus = false;
-        return;
-      }
+      // if(/^[a-z0-9A-Z]+$/.test(data.password)) {
+      //   message.error('密码必须包含特殊字符');
+      //   this.btnStatus = false;
+      //   return;
+      // }
       const hide = message.loading('正在登陆中...');
       let isSuccess = await dispatch({
         type: 'model/login',
         payload: data,
       });
       hide();
-      if (isSuccess !== null) {
+      if (isSuccess) {
         notification.success({
           duration: 1,
           message: '验证成功',
@@ -48,9 +48,10 @@ class IndexController extends Component {
           }
         });
         setTimeout(() => {
-          dispatch(routerRedux.push('/dashboard/article-list'));
+          dispatch(routerRedux.push('/dashboard/aimi-tags'));
         }, 500);
       } else {
+        console.log(this.props.model.error.msg)
         let erblock = JSON.parse(this.props.model.error.msg);
         this.btnStatus = false;
         notification.error({
@@ -58,6 +59,9 @@ class IndexController extends Component {
           message: '登陆错误',
           description: `错误代码${erblock.statusCode}: ${erblock.message}`
         });
+        setTimeout(() => {
+          this.props.form.resetFields();
+        }, 1500);
       }
     });
   };
@@ -67,8 +71,8 @@ class IndexController extends Component {
       <React.Fragment>
         <div className={styles.form}>
           <div className={styles.logo}>
-            <img src={require('./logo.png')} alt="website logo" />
-            <span>Nekohand Blog CMS</span>
+            <img src={require('./logo.jpg')} alt="website logo" />
+            <span>Aimi Fan Club Admin</span>
           </div>
           <Form onSubmit={this.onSubmit}>
             <FormItem hasFeedback>

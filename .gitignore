@@ -44,3 +44,6 @@ yarn.lock
 out/*
 .idea/httpRequests
 .idea/workspace.xml
+*.zip
+*.rar
+logo.jpg

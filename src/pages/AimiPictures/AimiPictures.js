@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 import Head from '@symph/joy/head';
 import controller, {requireModel} from "@symph/joy/controller";
+import produce from "immer";
 import autowire from '@symph/joy/autowire';
 import AimiModel from "../../models/aimiModels";
 import styles from './AimiPictures.less';
 import {
   Transfer, Switch,
+  Menu,
+  Select,
   Modal,
   Form,
   Input,
   Button,
+  Dropdown,
   Checkbox,
   Icon,
   message,
@@ -33,12 +37,59 @@ class AimiPictures extends Component {
     disabled: false,
     currentEditData: {},
     dataSource: [],
-    pagination: {},
+    pagination: {
+      defaultPageSize: 20,
+      size: "medium",
+      showQuickJumper: true,
+      pageSize: 20,
+    },
     btnStatus: true,
     loading: false,
     ModalText: '标签列表',
     visible: false,
     confirmLoading: false,
+    rowSelection: undefined,
+    rowSelectionData: [],
+    rowSelectionTags: [],
+  };
+
+  rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      this.setState({
+        rowSelectionData: selectedRows,
+      })
+    },
+    onSubmit: () => {
+      let {rowSelectionData, rowSelectionTags, pagination} = this.state;
+      let submitData = produce(rowSelectionData, draft => {
+        draft.forEach(item => item.Tags = rowSelectionTags);
+      });
+      console.log(submitData, "JJJ");
+      this.aimi.updateAimiPictureTags({
+        payload: submitData,
+      }).then((success) => {
+        if (success) {
+          message.success("修改成功");
+          setTimeout(() => {
+            this.fetchData({
+              tagid: "5e50152d58adfe5f36e095f5",
+              pagenum: pagination.current,
+              pagesize: 20,
+            });
+            this.setState({
+              visible: false,
+              confirmLoading: false,
+              rowSelection: undefined,
+              rowSelectionData: [],
+              rowSelectionTags: [],
+            });
+          }, 2000);
+        } else {
+          message.warning("Error!")
+        }
+      });
+    }
   };
 
   formRef = React.createRef();
@@ -61,14 +112,46 @@ class AimiPictures extends Component {
       ModalText: 'The modal will be closed after two seconds',
       confirmLoading: true,
     });
-
+    let {tags, targetKeys, currentEditData} = this.state;
     console.log(this.state.targetKeys, "ready to submit");
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
-    }, 2000);
+
+    let data = {
+      FileId: currentEditData.fileId,
+      ID: currentEditData.ID,
+      Tags: [],
+    };
+    targetKeys.forEach(item => {
+      for (let i =0; i< tags.length; i+=1) {
+        if (item === tags[i].tagid && tags[i].ID !== 1) {
+          data.Tags.push({
+            TagId: item,
+            TagName: tags[i].tagname,
+            ID: tags[i].ID,
+            TagLink: tags[i].taglink,
+          })
+        }
+      }
+    });
+
+    console.log(data, "submitData");
+
+    this.aimi.updateAimiPictureTags({
+      payload: [data],
+    }).then((success) => {
+      if (success) {
+        message.success("修改成功");
+        setTimeout(() => {
+          this.setState({
+            visible: false,
+            confirmLoading: false,
+            targetKeys: [this.state.tags[0].key],
+          });
+        }, 2000);
+
+      } else {
+        message.warning("Error!")
+      }
+    });
   };
 
   handleCancel = () => {
@@ -111,12 +194,11 @@ class AimiPictures extends Component {
         pagesize,
       }
     }).then((res) => {
-      console.log(res.pager, "pager");
+      console.log(res.pager, this.props.aimiModel.pager, "pager");
       this.setState({
         dataSource: res.data,
         pagination: {
           ...this.props.aimiModel.pager,
-          pageSize: parseInt(res.pager.pageSize, 10),
           total: parseInt(res.pager.total, 10),
           current: parseInt(pagenum, 10),
         },
@@ -125,6 +207,7 @@ class AimiPictures extends Component {
       });
     });
   };
+
   componentDidMount() {
     this.fetchTagData();
     this.fetchData({
@@ -147,7 +230,7 @@ class AimiPictures extends Component {
         this.btnStatus = false;
         return null;
       }
-      if (!/^[A-Za-z_]+$/.exec(data.taglink)) {
+      if (!/^[A-Za-z_0-9]+$/.exec(data.taglink)) {
         message.error('标签链接只能为英文和下划线');
         this.btnStatus = false;
         return null;
@@ -171,13 +254,7 @@ class AimiPictures extends Component {
     {
       title: "序列",
       dataIndex: "ID",
-      width: 60,
-    },
-    {
-      title: "标签名称",
-      dataIndex: "fileName",
-      width: 60,
-      editable: true,
+      width: 40,
     },
     {
       title: "预览",
@@ -206,7 +283,7 @@ class AimiPictures extends Component {
         return (
           <div>
             <Popconfirm title="确认删除数据？" onConfirm={() => this.handleDelete(record.key)} style={{ marginRight: 16 }} >
-              <Button type={"danger"} style={{ marginRight: 16 }}>删除</Button>
+              <Button type={"danger"} style={{ marginRight: 16 }} disabled>删除</Button>
             </Popconfirm>
             <Button type={"primary"} onClick={() => this.handleEdit(record)}>编辑</Button>
           </div>
@@ -218,6 +295,7 @@ class AimiPictures extends Component {
 
   handleTableChange = (pagination, filters, sorter) => {
     const pager = { ...this.state.pagination };
+    console.log(pagination, "adsfas");
     pager.current = pagination.current;
     this.setState({
       pagination: pager,
@@ -253,6 +331,25 @@ class AimiPictures extends Component {
     this.setState({ disabled });
   };
 
+  handleRowSelectionChange = () => {
+    let enable = !!this.state.rowSelection;
+    this.setState({
+      rowSelection: enable ?  undefined : this.rowSelection
+    });
+  };
+
+  handleMenuClick = (e) => {
+    message.info('Click on menu item.');
+    console.log('click', e);
+  };
+
+  handleSelectOnChange = (value) => {
+    console.log(this.state.tags.filter(item => item.tagid === value));
+    this.setState({
+      rowSelectionTags: this.state.tags.filter(item => item.tagid === value),
+    });
+  };
+
 
   render() {
     const { tags, targetKeys, selectedKeys, disabled } = this.state;
@@ -286,11 +383,40 @@ class AimiPictures extends Component {
 
     return (
       <React.Fragment>
-        Aimi Picture App
+        <div style={{marginBottom: 16}}>
+          <Button style={{marginRight: 16}}
+                  type="alert"
+                  onClick={this.handleRowSelectionChange} >
+            {this.state.rowSelection ? `取消` : `批量管理`}
+          </Button>
+          {this.state.rowSelection ?
+            <div style={{display: "inline-block"}}>
+              <Select
+                style={{ width: 200 }}
+                showSearch
+                placeholder="选择一个标签"
+                optionFilterProp="children"
+                onChange={this.handleSelectOnChange}
+                dropdownMenuStyle={{maxHeight: 400,
+                          overflowY: "scroll",
+                          overflowX: "hidden",
+                          border: "1px solid #ccc",
+                        }}
+              >
+                {this.state.tags.map(item => {
+                  return <Select.Option key={item.tagid} value={item.tagid}>
+                    <Icon type="user" />{item.tagname}({item.taglink})
+                  </Select.Option>
+                })}
+              </Select>
+              <Button type="primary" style={{marginLeft: 16}} onClick={this.rowSelection.onSubmit}>提交</Button>
+            </div>
+            : null}
+        </div>
         {dataSource.length > 0 ?
           <Table bordered
-                 scroll={{ y: 720 }}
-                 rowSelection={{}}
+                 scroll={{ y: 540 }}
+                 rowSelection={this.state.rowSelection}
                  rowClassName={() => 'editable-row'}
                  rowKey={record => record.hashId}
                  pagination={this.state.pagination}
