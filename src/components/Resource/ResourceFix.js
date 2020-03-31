@@ -1,14 +1,20 @@
 import React, {Component} from 'react'
 import {Form, Button, Icon, Input, Tooltip, message, notification, Upload} from 'antd';
 import DataModel from '../../models/model';
+import AimiModel from "../../models/aimiModels";
 import controller, {requireModel} from "@symph/joy/controller";
 import {default as configs} from "../../services/config";
+import autowire from "@symph/joy/autowire";
 
 const FormItem = Form.Item;
 @requireModel(DataModel)
 @controller(state => ({model: state.model}))
 
 class ResourceFix extends Component{
+
+  @autowire()
+  aimi: AimiModel;
+
 
   state = {
     fileList: [],
@@ -18,6 +24,11 @@ class ResourceFix extends Component{
     uploading: false,
     btnStatus: false,
   };
+
+  componentDidMount() {
+    this.aimi.fetchAimiTags();
+  }
+
 
   handleChange = (info) => {
     console.log(info, 'jkdlaf');
@@ -121,22 +132,14 @@ class ResourceFix extends Component{
 
   render(){
     const props = {
-      action: `http://localhost:17699/tagfiles.add`,
+      action: `https://mltd.ecs32.top/tagfile.upload`,
       listType: 'picture',
       data: {
         name: this.state.uploadingFilename,
         relativePath: this.state.relativePathName,
         token: window.localStorage.getItem("nekohand_token"),
         uid: window.localStorage.getItem("nekohand_administrator"),
-        tags: JSON.stringify([{
-          tagid: "5e5016e6872c893054d3945d",
-        }, {
-          tagid: "5e50175b872c893054d3945e"
-        }, {
-          tagid: "5e514cca58adfe5f36e095fc",
-          taglink: "lightorange",
-          tagname: "浅黄色",
-        }]),
+        tags: JSON.stringify([]),
       },
       onChange: this.handleChange,
       defaultFileList: [],

@@ -71,8 +71,8 @@ class IndexController extends Component {
       <React.Fragment>
         <div className={styles.form}>
           <div className={styles.logo}>
-            <img src={require('./logo.jpg')} alt="website logo" />
-            <span>Aimi Fan Club Admin</span>
+            <img src={require('./icon_app.png')} alt="website logo" />
+            <span>Nekohand Blog with Aimi Special</span>
           </div>
           <Form onSubmit={this.onSubmit}>
             <FormItem hasFeedback>
