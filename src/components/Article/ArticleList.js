@@ -85,7 +85,12 @@ export default class ArticleList extends Component {
       <span>
         <Button type="primary" style={{ marginRight: 10 }} onClick={(e) => {
           console.log('ee', record);
-          this.props.dispatch(routerRedux.push(`/dashboard/article-list/edit/${record.id}`)) }}>Edit</Button>
+          this.props.dispatch(routerRedux.push({
+            pathname: "/dashboard/article-list/edit",
+            search: require('query-string').stringify({
+              pid: `${record.id}`,
+            }),
+          })) }}>Edit</Button>
         <Popconfirm title="Are you sure delete this post?" onConfirm={() => {this.deletePost({
           pid: record.id,
           headers: {

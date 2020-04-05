@@ -30,7 +30,7 @@ export default class AppModel {
     },
     post: {
       id: '-1',
-      title: '',
+      title: 'abcde',
       category: '',
       createdAt: 0,
       slug: 'this is a created post',
@@ -177,9 +177,15 @@ export default class AppModel {
   }
 
   async fetchPostById({payload}) {
+    console.log("pid", payload);
+    if (!payload) {
+      return;
+    }
     let response = await postFetch(payload);
     let responseData = lodash.cloneDeep(response.data);
+    let {post} = this.getState();
     this.setState({
+      ...post,
       post: responseData,
     });
     return null;

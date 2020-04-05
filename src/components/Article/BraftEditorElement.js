@@ -29,24 +29,12 @@ export default class BraftEditorElement extends React.Component {
     //组件库
     this.braftFinder = this.editorInstance.getFinderInstance();
     let self = this;
+    // console.log(this.props.location.search, "search", this.props.initState);
     if (window && window.location.pathname.includes('edit')) {
-
-      self.props.dispatch({
-        type: 'model/fetchPostById',
-        payload: window.location.pathname.split('/')[4],
-      }).then(() => {
-        self.state.hide();
-        // setTimeout(() => {
-        //   self.props.form.setFieldsValue({
-        //     body: BraftEditorEle.createEditorState(self.props.model.post.body),
-        //   });
-        // }, 2000);
-        this.setState({
-          readOnly: false,
-          editorState: BraftEditorElem.createEditorState(lodash.cloneDeep(self.props.model.post.body)),
-          rawHTML: self.props.model.post.body,
-        });
-        // console.log(self.props, self.state,  'after fetch State');
+      this.setState({
+        readOnly: false,
+        editorState: BraftEditorElem.createEditorState(lodash.cloneDeep(this.props.initState.body)),
+        rawHTML: this.props.initState.body,
       });
     } else {
       self.props.model.post = {
@@ -207,7 +195,7 @@ export default class BraftEditorElement extends React.Component {
 
 
   toRawHtml =  (e) => {
-      console.log('new HTML', e.currentTarget.value);
+      // console.log('new HTML', e.currentTarget.value);
       // let regEx_style = `<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>`;
       // let bbb = regEx_style.match(e.currentTarget.value);
       // console.log(bbb);
@@ -302,6 +290,7 @@ export default class BraftEditorElement extends React.Component {
         onClick: this.insertMediaItem
       }
     ];
+    // console.log(this.state.editorState, "editorState");
     return (
       <div>
         <BraftEditorElem

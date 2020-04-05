@@ -72,14 +72,10 @@ class ArticleEdit extends Component {
     editorState: '',
   };
 
-  componentWillMount() {
-    this.setState({
-      hide: message.loading('载入数据中...', 0)
-    });
-  }
-
   componentDidMount() {
+    // console.log("did mount");
     let self = this;
+    let pid = require('query-string').parse(this.props.location.search).pid;
     self.props.dispatch({
       type: 'model/fetchCategories',
       payload: {
@@ -88,10 +84,9 @@ class ArticleEdit extends Component {
       }
     }).then(() => {
       if (window && window.location.pathname.includes('edit')) {
-        self.dataIndex = window.location.pathname.split('/')[4];
         self.props.dispatch({
           type: 'model/fetchPostById',
-          payload: self.dataIndex,
+          payload: pid,
         }).then(() => {
           self.state.hide();
         });
@@ -102,6 +97,7 @@ class ArticleEdit extends Component {
           createdAt: 1598908234,
           slug: 'this is a new post',
           status: 'Public',
+          body: '',
         };
         self.state.hide();
         this.setState({
@@ -113,7 +109,7 @@ class ArticleEdit extends Component {
   }
 
   onSetValue = (body) => {
-    console.log(body, 'body');
+    // console.log(body, 'body');
     this.props.form.setFieldsValue({
       body
     });
@@ -126,7 +122,7 @@ class ArticleEdit extends Component {
 
   onSubmit = e => {
     const {form: {validateFields}, dispatch} = this.props;
-    console.log(this.props.model.post);
+    // console.log(this.props.model.post);
     this.child.saveCurrent();
     e.preventDefault();
     validateFields(async (err, data) => {
@@ -161,7 +157,7 @@ class ArticleEdit extends Component {
       }
       // 将空的段落转化为回车。
       // pdata.body = pdata.body.replace(/\<p\>\<\/p\>/gi, `<br/>`);
-      console.log("pdata to post", pdata);
+      // console.log("pdata to post", pdata);
       this.props.dispatch({
         type: 'model/createPost',
         payload: pdata,
@@ -176,11 +172,13 @@ class ArticleEdit extends Component {
     });
   };
 
-
+  createBraftEditor = (postData) => {
+    return postData.body ? (<BraftEditor setValue={this.onSetValue} onRef={this.onRef} initState={postData} />)
+      : <div>Undefined</div>;
+  };
 
 
   render() {
-
 
     const {form: {getFieldDecorator}} = this.props;
     return (
@@ -258,7 +256,7 @@ class ArticleEdit extends Component {
                 },
               ],
               initialValue: this.props.model.post.slug,
-            })(<TextArea autosize={{ minRows: 1, maxRows: 6 }} placeholder="post slug" />)}
+            })(<TextArea autoSize={{ minRows: 1, maxRows: 6 }} placeholder="post slug" />)}
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -291,7 +289,10 @@ class ArticleEdit extends Component {
                   message: 'Please write body',
                 },
               ],
-            })(<BraftEditor setValue={this.onSetValue} onRef={this.onRef} />)}
+            })(
+              this.createBraftEditor(this.props.model.post)
+              // <BraftEditor setValue={this.onSetValue} onRef={this.onRef} initState={this.props.model.post} />
+              )}
           </FormItem>
           <FormItem
             {...tailFormItemLayout}
