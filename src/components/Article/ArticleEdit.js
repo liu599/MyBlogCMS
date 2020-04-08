@@ -97,7 +97,7 @@ class ArticleEdit extends Component {
           createdAt: 1598908234,
           slug: 'this is a new post',
           status: 'Public',
-          body: '',
+          body: 'new post',
         };
         self.state.hide();
         this.setState({
