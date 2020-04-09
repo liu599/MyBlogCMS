@@ -3,10 +3,11 @@ import BraftEditorElem from 'braft-editor';
 import { ContentUtils } from 'braft-utils';
 import DashboardModel from '../../models/model'
 import {requireModel} from "@symph/joy/controller";
-import {Input} from 'antd';
 const { TextArea } = Input;
 import controller from "@symph/joy/controller";
 import lodash from 'lodash'
+import {Form, Button, Icon, Input, Tooltip, message, notification, Upload} from 'antd';
+import {default as configs} from "../../services/config";
 
 @requireModel(DashboardModel)          // register model
 @controller((state) => {              // state is store's state
@@ -21,6 +22,26 @@ export default class BraftEditorElement extends React.Component {
     editorState: BraftEditorElem.createEditorState('<p>删除这段话来开始编辑内容</p>'),
     readOnly: true,
     rawHTML: '<p>删除这段话来开始编辑内容</p>',
+    fileList: [],
+    uploadingFilename: 'rqst.png',
+    relativePathName: '/',
+    createdAt: 0,
+    uploading: false,
+    btnStatus: false,
+  };
+
+  uploadHandler = (param) => {
+
+
+    // customRequest通过覆盖默认上传行为写自己的。 不需要。
+    console.log(param, "param");
+
+    if (!param.file) {
+      return false
+    }
+
+
+
   };
 
   componentDidMount() {
@@ -74,6 +95,54 @@ export default class BraftEditorElement extends React.Component {
     window.previewWindow = window.open();
     window.previewWindow.document.write(this.buildPreviewHtml());
     window.previewWindow.document.close();
+
+  };
+
+  // FIXME:
+  handleUploadFileChange = (info) => {
+    console.log(info, typeof(info.file), 'jkdlaf');
+
+
+
+    this.setState({
+      uploadingFilename: info.file.name,
+      createdAt: Math.floor(info.file.lastModified * 0.001),
+      fileList: [...info.fileList] });
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+
+    if (info.file.status === 'done') {
+      info.fileList = info.fileList.map(file => {
+        if (file.response) {
+          // Component will show file.url as link
+          // file.url = file.response.url;
+          console.log(file.response);
+          if (file.response.hasOwnProperty("file_name")) {
+            let fname = file.response["file_name"];
+            let relativePath = file.response["file_relative_path"];
+            file.url =`${configs.fileRootUrl}${relativePath}${fname[0]}`;
+            // 插入缩略图
+            let reader = new FileReader();
+
+            reader.addEventListener("load", () => {
+              // convert image file to base64 string
+              this.setState({
+                editorState: ContentUtils.insertMedias(this.state.editorState, [{
+                  type: 'IMAGE',
+                  url: reader.result
+                }])
+              })
+            }, false);
+            reader.readAsDataURL(info.file.originFileObj);
+          }
+        }
+        return file;
+      });
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
 
   };
 
@@ -223,13 +292,30 @@ export default class BraftEditorElement extends React.Component {
         url: 'https://margox.cn/wp-content/uploads/2017/05/IMG_4995-480x267.jpg'
       }
     ]);
-
+    console.log("更新")
     // 更新插入媒体后的editorState
     this.setState({ editorState })
 
-  }
+  };
+
 
   render() {
+
+    const props = {
+      action: `https://mltd.ecs32.top/upload`,
+      beforeUpload: file => {
+        props.data.fileName = file.name;
+        props.data.relativePath = `/blog/${this.props.initState.pid}`;
+      },
+      data: {
+        email: "460512944.com",
+        token: window.localStorage.getItem("nekohand_token"),
+        uid: window.localStorage.getItem("nekohand_administrator"),
+        relativePath: ""
+      },
+      onChange: this.handleUploadFileChange,
+      defaultFileList: [],
+    };
     const excludeControls = [
       'letter-spacing',
       'line-height',
@@ -278,16 +364,34 @@ export default class BraftEditorElement extends React.Component {
         }
       },
       'separator',
+      // {
+      //   key: 'add-media',
+      //   type: 'button',
+      //   text: '插入图片到媒体库',
+      //   onClick: this.addMediaItem
+      // }, {
+      //   key: 'insert-media',
+      //   type: 'button',
+      //   text: '插入图片到编辑器',
+      //   onClick: this.insertMediaItem
+      // },
       {
-        key: 'add-media',
-        type: 'button',
-        text: '插入图片到媒体库',
-        onClick: this.addMediaItem
-      }, {
-        key: 'insert-media',
-        type: 'button',
-        text: '插入图片到编辑器',
-        onClick: this.insertMediaItem
+        key: 'antd-uploader',
+        type: 'component',
+        text: '插入图片到编辑器2',
+        component: (
+          <Upload
+            {...props}
+            accept="image/*"
+            showUploadList={false}
+            // customRequest={this.uploadHandler}
+          >
+            {/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
+            <Button type="button" className="control-item button upload-button" data-title="插入图片">
+              <Icon type="picture" theme="filled" />
+            </Button>
+          </Upload>
+        )
       }
     ];
     // console.log(this.state.editorState, "editorState");

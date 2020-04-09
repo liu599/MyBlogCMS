@@ -46,9 +46,11 @@ class ResourceFix extends Component{
           // Component will show file.url as link
           // file.url = file.response.url;
           console.log(file.response);
-          let fname = file.response["file_name"];
-          let relativePath = file.response["file_relative_path"];
-          file.url =`${configs.fileRootUrl}${relativePath}${fname[0]}`;
+          if (file.response.hasOwnProperty("file_name")) {
+            let fname = file.response["file_name"];
+            let relativePath = file.response["file_relative_path"];
+            file.url =`${configs.fileRootUrl}${relativePath}${fname[0]}`;
+          }
         }
         return file;
       });
@@ -132,14 +134,17 @@ class ResourceFix extends Component{
 
   render(){
     const props = {
-      action: `https://mltd.ecs32.top/tagfile.upload`,
+      action: `https://mltd.ecs32.top/upload`,
       listType: 'picture',
+      beforeUpload: file => {
+        props.data.fileName = file.name;
+        props.data.relativePath = this.state.relativePathName;
+      },
       data: {
-        name: this.state.uploadingFilename,
-        relativePath: this.state.relativePathName,
+        email: "460512944.com",
         token: window.localStorage.getItem("nekohand_token"),
         uid: window.localStorage.getItem("nekohand_administrator"),
-        tags: JSON.stringify([]),
+        relativePath: ""
       },
       onChange: this.handleChange,
       defaultFileList: [],
@@ -197,9 +202,14 @@ class ResourceFix extends Component{
         <h2 style={{ marginBottom: 20 }}>资源上传</h2>
         <div style={{ marginBottom: 20 }}>
           <Input defaultValue={"/"}
-                 onChange={(e) => {this.setState({
-                   relativePathName: e.target.value
-                 })}}
+                 onChange={(e) => {
+                   console.log('eddie32', e.target.value);
+                   props.data.relativePath = e.target.value;
+                   console.log(props, "");
+                   this.setState({
+                      relativePathName: e.target.value
+                   }
+                 )}}
                  placeholder="创建资源的相对路径" />
         </div>
         <div style={{ marginBottom: 20 }}>

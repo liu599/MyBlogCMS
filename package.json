@@ -1,6 +1,6 @@
 {
   "name": "a-cms-for-nekohandblog",
-  "version": "7.6.1",
+  "version": "7.7.0",
   "description": "Nekohand blog专用CMS",
   "main": "index.js",
   "keywords": [

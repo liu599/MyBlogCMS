@@ -272,7 +272,7 @@ class ArticleEdit extends Component {
               ],
               initialValue: this.props.model.post.status,
             })(<Radio.Group>
-              <Radio key={'public'} value={'public'}>Public</Radio>
+              <Radio key={'public'} value={''}>Public</Radio>
               <Radio key={'private'} value={'private'}>Private</Radio>
             </Radio.Group>)}
           </FormItem>
