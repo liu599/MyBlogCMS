@@ -34,7 +34,7 @@ export default class BraftEditorElement extends React.Component {
 
 
     // customRequest通过覆盖默认上传行为写自己的。 不需要。
-    console.log(param, "param");
+    // console.log(param, "param");
 
     if (!param.file) {
       return false
@@ -122,19 +122,30 @@ export default class BraftEditorElement extends React.Component {
             let fname = file.response["file_name"];
             let relativePath = file.response["file_relative_path"];
             file.url =`${configs.fileRootUrl}${relativePath}${fname[0]}`;
-            // 插入缩略图
-            let reader = new FileReader();
-
-            reader.addEventListener("load", () => {
-              // convert image file to base64 string
+            if (info.file.size > 60000) {
               this.setState({
                 editorState: ContentUtils.insertMedias(this.state.editorState, [{
                   type: 'IMAGE',
-                  url: reader.result
+                  url: file.url
                 }])
               })
-            }, false);
-            reader.readAsDataURL(info.file.originFileObj);
+            } else {
+              //插入缩略图
+              let reader = new FileReader();
+
+              reader.addEventListener("load", () => {
+                // convert image file to base64 string
+                this.setState({
+                  editorState: ContentUtils.insertMedias(this.state.editorState, [{
+                    type: 'IMAGE',
+                    url: reader.result
+                  }])
+                })
+              }, false);
+              reader.readAsDataURL(info.file.originFileObj);
+            }
+
+
           }
         }
         return file;
