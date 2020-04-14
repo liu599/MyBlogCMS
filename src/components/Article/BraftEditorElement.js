@@ -316,7 +316,7 @@ export default class BraftEditorElement extends React.Component {
       action: `https://mltd.ecs32.top/upload`,
       beforeUpload: file => {
         props.data.fileName = file.name;
-        props.data.relativePath = `/blog/${this.props.initState.pid}`;
+        props.data.relativePath = `/blog/${this.props.initState.pid}/`;
       },
       data: {
         email: "460512944.com",
